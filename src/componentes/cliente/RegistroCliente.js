@@ -1,168 +1,203 @@
-import React, {  useContext,useState } from 'react';
+import React, { useState } from 'react'; // Importa useState
+import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import bcrypt from 'bcryptjs';
 
 
 const FormularioRegistro = () => {
-      const [formData, setFormData] = useState({
-          Nombre: '',
-          apellido: '',
-          telefono: '',
-          correo: '',
-          tipo_documento: '',
-          numero_documento: '',
-          rol: 'Cliente',
-          contrasena: '',
-          direccion: '',
-          barrio: '',
-          estado: '',
-          aceptaTerminos: false, // Asegúrate de que esto sea un booleano si es un checkbox
-      });
 
+  const [mostrarContrasena, setMostrarContrasena] = useState(false);
 
-      const [mostrarModal, setMostrarModal] = useState(false);
-      const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  const navigate = useNavigate(); // Asegúrate de que navigate esté definido
       
+    const [formData, setFormData] = useState({
+      nombre: '', 
+      apellido: '', 
+      telefono: '', 
+      correo: '', 
+      tipo_documento: 'Cedula de ciudadania', 
+      numero_documento: '', 
+      rol: 'Cliente', 
+      contrasena: '', 
+      direccion: '', 
+      barrio: '', 
+      estado : 'Activo', // Valor por defecto si no se proporciona
+      aceptaTerminos : false 
+  });
 
-        const manejarAceptarTerminos = () => {
-            setFormData({ ...formData, aceptaTerminos: true });
-            setMostrarModal(false);
-        };
-        
-        const manejarCancelarTerminos = () => {
-            setMostrarModal(false);
-        };
+  
 
-        
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+        ...formData,
+        [name]: value, 
+    });
 
-        const handleChange = (e) => {
-            const { name, value, type, checked } = e.target;
-            setFormData({
-            ...formData,
-            [name]: type === 'checkbox' ? checked : value,
-            });
-
-            // Validación condicional para el campo número de documento
-            if (name === 'tipo_documento') {
-            // Si el tipo de documento es "Cedula de extranjeria", aplicar validación especial
-            if (value === 'Cedula de extranjeria') {
-                validateNumeroDocumento(formData.numero_documento, 'Cedula de extranjeria');
-            }
-            }
-            
-            if (formData.contrasena !== formData.confirmarContrasena) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Error',
-                  text: 'Las contraseñas no coinciden.',
-                });
-                return;
-            }
-        };
-
-        const validateNumeroDocumento = (numeroDocumento, tipoDocumento) => {
-            let regex;
-            if (tipoDocumento === 'Cedula de extranjeria') {
-            regex = /^[A-Z0-9]{7,10}$/i; // Ajusta según el formato específico para "Cédula de extranjería"
-            } else {
-            regex = /^\d{8,12}$/; // Para otros tipos de documentos
-            }
-            if (!regex.test(numeroDocumento)) {
-            // Manejo de error o estado de validación
-            console.error('Número de documento inválido para el tipo de documento seleccionado.');
-            }
-        };
-    
-      const validateForm = () => {
-        const { nombre, apellido, telefono, numero_documento, direccion, barrio, email, contrasena } = formData;
-        const errors = [];
-    
-        // Validación de nombre
-        if (nombre.length > 15) errors.push('El nombre debe tener máximo 15 caracteres.');
-        
-        // Validación de apellido
-        if (apellido.length > 20) errors.push('El apellido debe tener máximo 20 caracteres.');
-    
-        // Validación de email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) errors.push('El correo electrónico no es válido.');
-    
-        // Validación de teléfono
-        if (!/^[0-9]{10}$/.test(telefono)) errors.push('El teléfono debe tener 10 dígitos.');
-    
-        const direccionRegex = /^(Calle|Cll|Carrera|Cra|Avenida|Av|Transversal|Tv|Diagonal|Dg)\s.*$/i;
-        const caracteresValidos = /^[a-zA-Z0-9\s#.-]*$/;
-    
-        if (!direccionRegex.test(direccion)) {
-          errors.push('La dirección debe comenzar con una palabra clave válida como Calle, Carrera, Avenida, etc.');
-        } else if (!caracteresValidos.test(direccion)) {
-          errors.push('La dirección contiene caracteres no válidos.');
-        }
-        
-        // Validación de barrio
-        if (/[^a-zA-Z\s]/.test(barrio)) errors.push('El barrio solo debe contener letras.');
-    
-        // Validación de número de documento
-        if (formData.tipo_documento === 'Cedula de extranjeria') {
-          if (numero_documento.length < 7 || numero_documento.length > 10) errors.push('El número de documento para cédula de extranjería debe tener entre 7 y 10 caracteres.');
-        } else {
-          if (numero_documento.length < 8 || numero_documento.length > 12) errors.push('El número de documento debe tener entre 8 y 12 caracteres.');
-        }
-        // Validación de contraseña
-        const contrasenaRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).{6,10}$/;
-        if (!contrasenaRegex.test(contrasena)) errors.push('La contraseña debe tener entre 6 y 10 caracteres e incluir letras, números y símbolos.');
-    
-        return errors;
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        const validationErrors = validateForm();
-        if (validationErrors.length > 0) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Errores de Validación',
-            text: validationErrors.join(' '),
-          });
-          return;
-        }
-    
-        try {
-          // Encripta la contraseña antes de enviarla
-          const contrasenaEncriptada = await bcrypt.hash(formData.contrasena, 10);
-          
-          // Prepara los datos para el registro
-          const formDataToSubmit = { ...formData, contrasena: contrasenaEncriptada };
-      
-          // Enviar los datos a la nueva URL
-          const registerResponse = await axios.post('http://localhost:8000/usuarios', formDataToSubmit);
-      
-          // Comprobar la respuesta del registro
-          if (registerResponse.status === 201) {
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Éxito',
-                  text: 'Registro exitoso.',
-              });
-          } else {
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Error',
-                  text: 'Hubo un problema al registrar el usuario.',
-              });
-          }
-      } catch (error) {
-          console.error("Error al registrar:", error); // Para depuración
-          Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: error.response?.data?.message || 'Hubo un problema con la conexión al servidor.',
-          });
+     // Validación condicional para el campo número de documento
+     if (name === 'tipo_documento') {
+      // Si el tipo de documento es "Cedula de extranjeria", aplicar validación especial
+      if (value === 'Cedula de extranjeria') {
+        validateNumeroDocumento(formData.numero_documento, 'Cedula de extranjeria');
       }
-      
-    };
+    }
+  };
+
+  const validateNumeroDocumento = (numeroDocumento, tipoDocumento) => {
+    let regex;
+    if (tipoDocumento === 'Cedula de extranjeria') {
+      regex = /^[A-Z0-9-a-z]{7,10}$/i; // Ajusta según el formato específico para "Cédula de extranjería"
+    } else {
+      regex = /^\d{8,12}$/; // Para otros tipos de documentos
+    }
+    if (!regex.test(numeroDocumento)) {
+      // Manejo de error o estado de validación
+      console.error('Número de documento inválido para el tipo de documento seleccionado.');
+    }
+  };
+
+
+  const validateForm = () => {
+    const { nombre, apellido, telefono, numero_documento, direccion, barrio, correo, contrasena } = formData;
+    const errors = [];
+
+    // Validación de nombre
+    if (nombre.length > 15) errors.push('El nombre debe tener máximo 15 caracteres.');
+    
+    // Validación de apellido
+    if (apellido.length > 20) errors.push('El apellido debe tener máximo 20 caracteres.');
+
+    // Validación de email
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!correoRegex.test(correo)) errors.push('El correo electrónico no es válido.');
+
+    // Validación de teléfono
+    if (!/^[0-9]{10}$/.test(telefono)) errors.push('El teléfono debe tener 10 dígitos.');
+
+    const direccionRegex = /^(Calle|Cll|Carrera|Cra|Avenida|Av|Transversal|Tv|Diagonal|Dg)\s.*$/i;
+    const caracteresValidos = /^[a-zA-Z0-9\s#.-]*$/;
+
+    if (!direccionRegex.test(direccion)) {
+      errors.push('La dirección debe comenzar con una palabra clave válida como Calle, Carrera, Avenida, etc.');
+    } else if (!caracteresValidos.test(direccion)) {
+      errors.push('La dirección contiene caracteres no válidos.');
+    }
+    
+    // Validación de barrio
+    if (/[^a-zA-Z\s]/.test(barrio)) errors.push('El barrio solo debe contener letras.');
+
+    // Validación de número de documento
+    if (formData.tipo_documento === 'Cedula de extranjeria') {
+      if (numero_documento.length < 7 || numero_documento.length > 10) errors.push('El número de documento para cédula de extranjería debe tener entre 7 y 10 caracteres.');
+    } else {
+      if (numero_documento.length < 8 || numero_documento.length > 12) errors.push('El número de documento debe tener entre 8 y 12 caracteres.');
+    }
+    // Validación de contraseña
+    const contrasenaRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).{6,10}$/;
+    if (!contrasenaRegex.test(contrasena)) errors.push('La contraseña debe tener entre 6 y 10 caracteres e incluir letras, números y símbolos.');
+
+    return errors;
+  };
+
+
+  const verificarUsuarioExistente = async () => {
+    try {
+        const response = await axios.post('http://localhost:8000/usuarios/verificar-usuario/', {
+            numero_documento: formData.numero_documento,
+            correo: formData.correo,
+        });
+        return response.data; // Retorna la respuesta para usarla más tarde
+    } catch (error) {
+        console.error('Error al verificar usuario:', error);
+        // Manejar errores específicos de la API
+        if (error.response) {
+            return {
+                exists: true,
+                message: error.response.data.message || 'Error al verificar el usuario.',
+            };
+        }
+        await Swal.fire({
+            title: "Error",
+            text: "Error al verificar el usuario. Inténtalo de nuevo más tarde.",
+            icon: "error",
+        });
+        return null; // En caso de error, retorna null
+    }
+};
+
+const subir = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+    if (validationErrors.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Errores de Validación',
+        text: validationErrors.join(' '),
+      });
+      return;
+    }
+
+    if (!formData.aceptaTerminos) {
+      setMostrarModal(true);
+      return;
+    }
+
+    // Verificar si el usuario ya existe
+    const verificacion = await verificarUsuarioExistente();
+    if (verificacion) {
+        if (verificacion.exists) {
+            // Muestra un mensaje de error si ya está registrado
+            await Swal.fire({
+                title: "Error",
+                text: verificacion.message, // Aquí se muestra el mensaje correspondiente
+                icon: "error",
+            });
+            return; // Detiene el registro
+        }
+    }
+
+    // Si no existe, procede a registrar al usuario
+    try {
+        await axios.post('http://localhost:8000/usuarios/', formData);
+        await Swal.fire({
+            title: "Éxito",
+            text: "Usuario registrado exitosamente.",
+            icon: "success",
+        });
+        navigate('/');  // Redirige a la página de inicio
+    } catch (error) {
+        console.error('Error registrando usuario:', error);
+        // Verifica si el error es por duplicado
+        if (error.response && error.response.data) {
+            const errorMessage = error.response.data.message;
+            await Swal.fire({
+                title: "Error",
+                text: errorMessage.includes('Duplicate entry') 
+                    ? 'El documento o el correo ya están registrados.'
+                    : 'Ocurrió un error al registrar el usuario. Inténtalo de nuevo más tarde.',
+                icon: "error",
+            });
+        }
+    }
+};
+
+
+  
+  const [mostrarModal, setMostrarModal] = useState(false); // Estado para controlar el modal
+  
+
+
+  // Funciones para manejar el modal
+  const manejarAceptarTerminos = () => {
+    setMostrarModal(false); // Cierra el modal
+    setFormData({ ...formData, aceptaTerminos: true }); // Marca el checkbox de aceptación
+  };
+
+  const manejarCancelarTerminos = () => {
+    setMostrarModal(false); // Cierra el modal sin aceptar los términos
+  };
+
 
   return (
     <div>
@@ -202,7 +237,7 @@ const FormularioRegistro = () => {
         </div>
         <div className="flex w-full lg:w-1/2 justify-center items-center imagen_formulario p-4 lg:p-6">
           <div className="w-full max-w-lg lg:max-w-2xl px-4 lg:px-6 bg-white rounded-lg shadow-lg p-4 space-y-4 overflow-hidden">
-            <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <form onSubmit={subir} className="space-y-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
               <h1 className="text-gray-800 font-bold text-2xl col-span-2 text-center mb-0">¡Regístrate!</h1>
               <p className="text-xs font-normal text-gray-600 col-span-2 text-center mt-0">Ingresa tus datos personales</p>
 
@@ -281,6 +316,35 @@ const FormularioRegistro = () => {
               </div>
 
               <div className="flex flex-col space-y-1 relative">
+                <label htmlFor="correo" className="text-gray-700 font-semibold text-xs">Email</label>
+                <div className="relative">
+                  <i className="fa-solid fa-envelope absolute left-2 top-2/4 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    id="correo"
+                    type="email"
+                    name="correo"
+                    value={formData.correo}
+                    onChange={handleChange}
+                    onInput={(e) => {
+                      // Limita la longitud del campo de entrada
+                      const value = e.target.value;
+                      if (value.length > 55) {
+                        e.target.value = value.slice(0, 55);
+                      }
+                    }}
+                    minLength={5}
+                    maxLength={55}
+                    pattern=".{15,55}"
+                    title="El correo debe tener entre 15 y 55 caracteres"
+                    className="pl-10 pr-2 border-2 border-yellow-300 py-1 rounded-lg text-sm outline-none focus:border-yellow-600 w-full"
+                    required
+                  />
+                </div>
+              </div>
+
+
+
+              <div className="flex flex-col space-y-1 relative">
                 <label htmlFor="tipo_documento" className="text-gray-700 font-semibold text-xs">Tipo de Documento</label>
                 <select
                   id="tipo_documento"
@@ -305,12 +369,12 @@ const FormularioRegistro = () => {
                     name="numero_documento"
                     value={formData.numero_documento}
                     onChange={(e) => {
-                        handleChange(e);
-                        const tipoDocumento = formData.tipo_documento;
-                        if (tipoDocumento === 'Cedula de extranjeria') {
-                          validateNumeroDocumento(e.target.value, tipoDocumento);
-                        }
-                      }}
+                      handleChange(e);
+                      const tipoDocumento = formData.tipo_documento;
+                      if (tipoDocumento === 'Cedula de extranjeria') {
+                        validateNumeroDocumento(e.target.value, tipoDocumento);
+                      }
+                    }}
                     onInput={(e) => {
                       const tipoDocumento = formData.tipo_documento;
                       let value = e.target.value;
@@ -383,44 +447,18 @@ const FormularioRegistro = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col space-y-1 relative">
-                <label htmlFor="email" className="text-gray-700 font-semibold text-xs">Email</label>
-                <div className="relative">
-                  <i className="fa-solid fa-envelope absolute left-2 top-2/4 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    onInput={(e) => {
-                      // Limita la longitud del campo de entrada
-                      const value = e.target.value;
-                      if (value.length > 55) {
-                        e.target.value = value.slice(0, 55);
-                      }
-                    }}
-                    minLength={5}
-                    maxLength={55}
-                    pattern=".{15,55}"
-                    title="El email debe tener entre 15 y 55 caracteres"
-                    className="pl-10 pr-2 border-2 border-yellow-300 py-1 rounded-lg text-sm outline-none focus:border-yellow-600 w-full"
-                    required
-                  />
-                </div>
-              </div>
+              
 
               <div className="flex flex-col space-y-1 relative">
                     <label htmlFor="contrasena" className="text-gray-700 font-semibold text-xs">Contraseña</label>
                     <div className="flex items-start space-x-4">
                         <div className="relative flex-1">
-                        <i
+                          <i
                             className={`fa-solid ${mostrarContrasena ? 'fa-eye-slash' : 'fa-eye'} absolute left-2 top-2/4 transform -translate-y-1/2 text-gray-400 cursor-pointer`}
                             onClick={() => setMostrarContrasena(!mostrarContrasena)}
-                        />
+                          />
                         <input
                             id="contrasena"
-                            type={mostrarContrasena ? 'text' : 'password'}
                             name="contrasena"
                             value={formData.contrasena}
                             onChange={handleChange}
@@ -435,24 +473,7 @@ const FormularioRegistro = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col space-y-1 relative">
-                    <label htmlFor="confirmarContrasena" className="text-gray-700 font-semibold text-xs">Confirmar Contraseña</label>
-                    <div className="relative flex-1">
-                        <input
-                        id="confirmarContrasena"
-                        type={mostrarContrasena ? 'text' : 'password'}
-                        name="confirmarContrasena"
-                        value={formData.confirmarContrasena}
-                        onChange={handleChange}
-                        minLength={6}
-                        maxLength={10}
-                        pattern=".{6,10}"
-                        title="La contraseña debe tener entre 6 y 10 caracteres"
-                        className={`border-2 ${formData.contrasena === formData.confirmarContrasena ? 'border-green-500' : 'border-red-500'} py-1 rounded-lg text-sm outline-none focus:border-yellow-600 w-full`}
-                        required
-                        />
-                    </div>
-                </div>
+                
 
               
                 <div className="flex flex-col space-y-2 mt-2">
