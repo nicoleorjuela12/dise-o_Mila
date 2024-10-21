@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import '../index.css';
-import BarraCliente from "../componentes/barras/Barra_Normal";
+import BarraCliente from "../componentes/barras/BarraCliente";
 import Footer from "../Footer/footer";
+
 
 const Index1 = () => {
 

@@ -17,8 +17,10 @@ function App() {
         <Route path='/Footer' element={<Footer />} />
         <Route path="/RegistroCliente" element={<FormularioRegistro />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/BarraCliente" element={<BarraCliente />} />
-        <Route path="/DashboardCliente" element={<Index1 />} />
+        
+          <Route path="/BarraCliente" element={<BarraCliente />} />
+          <Route path="/DashboardCliente" element={<Index1 />} />
+       
 
       </Routes>
     </Router>

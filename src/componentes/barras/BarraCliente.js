@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBox, faCalendar, faShoppingBasket, faCalendarCheck, faConciergeBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import { UserContext } from '../../context/UserContext'; // Asegúrate de importar el contexto correctamente
+import axios from 'axios';
+
 
 const BarraCliente = () => {
   const [showReservasMenu, setShowReservasMenu] = useState(false);
@@ -11,8 +12,8 @@ const BarraCliente = () => {
   const [showEventosMenu, setShowEventosMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileReservasMenu, setShowMobileReservasMenu] = useState(false);
+
   const navigate = useNavigate();
-  const { logout } = useContext(UserContext); // Usamos el contexto aquí
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -38,20 +39,35 @@ const BarraCliente = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    localStorage.clear(); // O sessionStorage.clear();
-    setShowUserMenu(false);
   
-    Swal.fire({
-      title: 'Sesión cerrada',
-      text: 'Tu sesión ha sido cerrada exitosamente.',
-      icon: 'success',
-      confirmButtonText: 'Aceptar'
-    }).then(() => {
-      navigate('/logout', { replace: true });
-      window.location.reload(); // Opcional para asegurar que se recargue la app
-    });
+
+
+  const handleLogout = async () => {
+    try {
+        const response = await axios.post('http://localhost:8000/usuarios/logout', {}, { withCredentials: true });
+        if (response.status === 200) {
+            // Eliminar el rol del usuario del almacenamiento local
+            localStorage.removeItem('rol');
+
+            // Mostrar mensaje de éxito
+            Swal.fire({
+                title: 'Sesión cerrada',
+                text: 'Has cerrado sesión exitosamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                // Redirigir al usuario a la página de inicio de sesión
+                navigate('/login');
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al cerrar sesión',
+            icon: 'error',
+            confirmButtonText: 'Reintentar'
+        });
+    }
   };
   
   return (

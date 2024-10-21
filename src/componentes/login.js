@@ -61,59 +61,81 @@ const Login = () => {
                 },
                 withCredentials: true,
             });
-
-            // Desestructurando la respuesta
-            const { rol, id, numero_documento: docNumber } = response.data.user;
-
-            // Guardar el rol, ID y número de documento en localStorage
-            localStorage.setItem('rol', rol);
-            localStorage.setItem('userId', id);
-            localStorage.setItem('numero_documento', docNumber);
+        
+            const usuario = response.data.usuario;
+            
+            // Verificar que el usuario tenga un rol definido
+            if (!usuario || !usuario.rol) {
+                throw new Error('El rol del usuario no está definido');
+            }
+        
+            // Almacenar el rol en localStorage
+            localStorage.setItem('rol', usuario.rol);
+        
+            localStorage.setItem('rol', usuario.rol);
 
             // Aviso de éxito
-            Swal.fire({
+            await Swal.fire({
                 title: 'Inicio de sesión exitoso',
                 text: 'Bienvenido de nuevo!',
                 icon: 'success',
                 confirmButtonText: 'Continuar'
-            }).then(() => {
-                // Redirigir según el rol
-                if (rol === 'administrador') {
-                    navigate('/dashboard-admin');
-                } else if (rol === 'mesero') {
-                    navigate('/dashboard-mesero');
-                } else if (rol === 'cliente') { // Verifica el nombre del rol aquí
-                    navigate('/dashboard-cliente');
-                } else {
-                    // Manejar el caso donde el rol no es reconocido
+            });
+    
+            let redirectPath = '/login'; // Ruta por defecto
+            switch (usuario.rol) {
+                case 'administrador':
+                    redirectPath = '/dashboard-admin';
+                    break;
+                case 'mesero':
+                    redirectPath = '/dashboard-mesero';
+                    break;
+                case 'Cliente':
+                    redirectPath = '/DashboardCliente';
+                    break;
+                default:
+                    throw new Error('Rol no reconocido');
+            }
+    
+            navigate(redirectPath); // Cambia a la ruta deseada
+    
+        }
+        
+        catch (error) {
+            if (error.response) {
+                const { status } = error.response;
+
+                if (status === 404) {
                     Swal.fire({
                         title: 'Error',
-                        text: 'Rol de usuario no reconocido.',
+                        text: 'Usuario no registrado en el sistema',
+                        icon: 'warning',
+                        confirmButtonText: 'Reintentar'
+                    }).then(() => {
+                        navigate('/login');
+                    });
+                } else if (status === 409) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Contraseña inválida',
+                        icon: 'error',
+                        confirmButtonText: 'Reintentar'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error en el servidor',
                         icon: 'error',
                         confirmButtonText: 'Reintentar'
                     });
                 }
-            });
-
-        } catch (error) {
-            console.error("Error en la solicitud:", error);
-            if (error.response) {
-                console.error("Datos de respuesta del error:", error.response.data);
-                if (error.response.status === 409) {
-                    Swal.fire({
-                        title: 'Error de conflicto',
-                        text: 'Hay un conflicto con la solicitud, por favor revise los datos.',
-                        icon: 'error',
-                        confirmButtonText: 'Reintentar'
-                    });
-                } else if (error.response.status === 401) {
-                    Swal.fire({
-                        title: 'Error de autenticación',
-                        text: 'Número de documento o contraseña incorrectos.',
-                        icon: 'error',
-                        confirmButtonText: 'Reintentar'
-                    });
-                }
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error de conexión con el servidor',
+                    icon: 'error',
+                    confirmButtonText: 'Reintentar'
+                });
             }
         }
     };
