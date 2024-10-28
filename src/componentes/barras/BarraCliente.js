@@ -44,10 +44,13 @@ const BarraCliente = () => {
 
   const handleLogout = async () => {
     try {
-        const response = await axios.post('http://localhost:8000/usuarios/logout', {}, { withCredentials: true });
-        if (response.status === 200) {
+      const response = await axios.post('http://localhost:8000/usuarios/cerrarsesion', {}, { withCredentials: true });
+      if (response.status === 200) {
             // Eliminar el rol del usuario del almacenamiento local
             localStorage.removeItem('rol');
+            localStorage.removeItem('id_usuario');
+            localStorage.clear(); 
+
 
             // Mostrar mensaje de éxito
             Swal.fire({
@@ -61,6 +64,7 @@ const BarraCliente = () => {
             });
         }
     } catch (error) {
+        console.error(error); // Agrega esta línea para ver el error en la consola
         Swal.fire({
             title: 'Error',
             text: 'Ocurrió un error al cerrar sesión',
@@ -68,7 +72,7 @@ const BarraCliente = () => {
             confirmButtonText: 'Reintentar'
         });
     }
-  };
+};
   
   return (
     <div className="flex flex-col items-center justify-center mb-24">
@@ -94,7 +98,7 @@ const BarraCliente = () => {
           </button>
 
           <div id="desktop-menu" className="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-12 space-y-2 lg:space-y-0">
-            <Link to="/" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
+            <Link to="/DashboardCliente" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faHome} className="mr-2" /> Inicio
             </Link>
 
@@ -111,7 +115,7 @@ const BarraCliente = () => {
               </Link>
               <div id="reservas-menu" className={`dropdown-menu mt-2 rounded-lg shadow-lg bg-white ${showReservasMenu ? 'show' : ''}`}>
                 <Link to="/reservalocal" className="block px-4 py-2">Reserva local</Link>
-                <Link to="/InicioReservaMesa" className="block px-4 py-2">Reserva mesa</Link>
+                <Link to="/ReservaMesa" className="block px-4 py-2">Reserva mesa</Link>
                 <Link to="/reservascliente" className='block px-4 py-2'>Consulta tus reservas</Link>
               </div>
             </div>
@@ -174,7 +178,7 @@ const BarraCliente = () => {
             </button>
           </div>
           <div className="flex flex-col p-4 space-y-2">
-            <Link to="/" className="text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>
+            <Link to="/DashboardCliente" className="text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>
               <FontAwesomeIcon icon={faHome} className="mr-2" /> Inicio
             </Link>
             <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
@@ -193,7 +197,7 @@ const BarraCliente = () => {
               {showMobileReservasMenu && (
                 <div id="mobile-reservas-menu" className="mt-2 pl-4 space-y-2">
                   <Link to="/InicioReservas" className="block text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>Reserva local</Link>
-                  <Link to="/InicioReservaMesa" className="block text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>Reserva mesa</Link>
+                  <Link to="/ReservaMesa" className="block text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>Reserva mesa</Link>
                 </div>
               )}
             </div>

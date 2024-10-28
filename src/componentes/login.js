@@ -70,9 +70,9 @@ const Login = () => {
             }
         
             // Almacenar el rol en localStorage
+            // Después de la verificación del rol
             localStorage.setItem('rol', usuario.rol);
-        
-            localStorage.setItem('rol', usuario.rol);
+            localStorage.setItem('id_usuario', usuario.id_usuario); // Almacena el ID del usuario
 
             // Aviso de éxito
             await Swal.fire({
@@ -85,7 +85,7 @@ const Login = () => {
             let redirectPath = '/login'; // Ruta por defecto
             switch (usuario.rol) {
                 case 'administrador':
-                    redirectPath = '/dashboard-admin';
+                    redirectPath = '/DashboardAdmin';
                     break;
                 case 'mesero':
                     redirectPath = '/dashboard-mesero';
