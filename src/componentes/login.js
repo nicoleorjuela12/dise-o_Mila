@@ -62,15 +62,29 @@ const Login = () => {
                 withCredentials: true,
             });
         
-            const usuario = response.data.usuario;
+            const { usuario } = response.data;
             
             // Verificar que el usuario tenga un rol definido
             if (!usuario || !usuario.rol) {
                 throw new Error('El rol del usuario no está definido');
             }
-        
+
+            // Comprobar si la contraseña ha caducado
+            const fechaCreacion = new Date(usuario.fechaCreacion);
+            const fechaActual = new Date();
+            const diferenciaDias = Math.floor((fechaActual - fechaCreacion) / (1000 * 60 * 60 * 24));
+
+            if (diferenciaDias > 7) {
+                Swal.fire({
+                    title: 'Cambio de contraseña requerido',
+                    text: 'Tu contraseña ha expirado. Debes cambiarla para continuar.',
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar'
+                });
+                return; // No continuar con el login
+            }
+
             // Almacenar el rol en localStorage
-            // Después de la verificación del rol
             localStorage.setItem('rol', usuario.rol);
             localStorage.setItem('id_usuario', usuario.id_usuario); // Almacena el ID del usuario
 
@@ -99,9 +113,7 @@ const Login = () => {
     
             navigate(redirectPath); // Cambia a la ruta deseada
     
-        }
-        
-        catch (error) {
+        } catch (error) {
             if (error.response) {
                 const { status } = error.response;
 
@@ -209,7 +221,7 @@ const Login = () => {
                             <div className="mt-6 text-gray-900 text-center">
                                 <Link to="/RegistroCliente" className="text-sm flex items-center justify-center mt-12 text-black no-underline hover:underline">
                                     <FontAwesomeIcon icon={faUserPlus} className="text-black mr-2" />
-                                    Si no tienes cuenta "Regístrate aquí"
+                                    ¿No tienes una cuenta? Regístrate aquí
                                 </Link>
                             </div>
                         </div>

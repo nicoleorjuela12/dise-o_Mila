@@ -22,7 +22,13 @@ import GestionReservaMesa from './componentes/administrador/reservas/GestionRese
 import EditarProductos from './componentes/administrador/Productos/EditarProductos';
 import ProductosCliente from './componentes/cliente/Productos/productos';
 import Carrito from './componentes/cliente/Pedidos/Carrito';
-
+import FormularioRegiEmp from './componentes/administrador/usuarios/registroempleados';
+import ConsultaUsuarios from './componentes/administrador/usuarios/consultausarios';
+import DetallesPedido from "./componentes/cliente/Pedidos/DetallesPedido"
+import Pedido from './componentes/cliente/Pedidos/verpedido';
+import DashboardMesero from './paginas/dashboard-mesero';
+import BarraMesero from './componentes/barras/Barra_Mesero';
+import GestionPedidos from './componentes/mesero/gestionPedidos';
 
 function App() {
     return (
@@ -59,6 +65,9 @@ const MainContent = () => {
         } else if (rol === 'Cliente') {
             return <BarraCliente />;
         }
+        else if (rol === 'mesero'){
+            return <BarraMesero/>
+        }
         return null;
     };
 
@@ -83,6 +92,13 @@ const MainContent = () => {
                     <Route path="/ReservasCliente" element={<PrivateRoute component={MisReservas}/>}/>
                     <Route path="/GestionReservasAdmin" element={<PrivateRoute component={GestionReservaMesa}/>}/>
                     <Route path="/EditarProductos/:id_producto" element={<PrivateRoute component={EditarProductos}/>}/>
+                    <Route path="/registroempleados" element={<PrivateRoute component={FormularioRegiEmp}/>}/>
+                    <Route path="/consultausarios" element={<PrivateRoute component={ConsultaUsuarios}/>}/>
+                    <Route path="/detalles-pedido" element={<PrivateRoute component={DetallesPedido}/>}/>
+                    <Route path="/pedidoss" element={<PrivateRoute component={Pedido}/>}/>
+                    <Route path="/dashboard-mesero" element={<PrivateRoute component={DashboardMesero}/>}/>
+                    <Route path="/pedidos-mesero" element={<PrivateRoute component={GestionPedidos}/>}/>
+
 
 
                     <Route path="*" element={<Navigate to="/" />} />

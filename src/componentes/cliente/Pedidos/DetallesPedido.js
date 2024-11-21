@@ -13,13 +13,12 @@ const DetallesPedido = () => {
   const [formData, setFormData] = useState({
     fecha: new Date().toISOString().split('T')[0],
     hora: '',
-    metodoPago: '',
+    metodo_pago: 'Efectivo',
     total: '',
-    tipoEntrega: '',
+    tipo_entrega: 'Domicilio',
     cantidad: carrito.reduce((total, producto) => total + producto.cantidad, 0),
-    detallesPedido: '',
-    estado: 'activo',
-    pedidoId: Math.floor(Math.random() * 1000000),
+    comentarios: '',
+    estado_pedido: 'Pendiente',
   });
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -62,7 +61,7 @@ const DetallesPedido = () => {
     }
   
     // Validación del método de pago
-    if (!formData.metodoPago) {
+    if (!formData.metodo_pago) {
       Swal.fire({
         title: 'Error',
         text: 'Debes seleccionar un método de pago.',
@@ -73,7 +72,7 @@ const DetallesPedido = () => {
     }
   
     // Validación del tipo de entrega
-    if (!formData.tipoEntrega) {
+    if (!formData.tipo_entrega) {
       Swal.fire({
         title: 'Error',
         text: 'Debes seleccionar un tipo de entrega.',
@@ -85,32 +84,29 @@ const DetallesPedido = () => {
   
     // Si todas las validaciones pasan, se envía el pedido
     try {
-      const response = await fetch('http://localhost:3000/pedidos', {
+      const response = await fetch('http://localhost:8000/usuarios/pedido', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          idpedido: formData.pedidoId,
           fecha: formData.fecha,
           hora: formData.hora,
-          metodoPago: formData.metodoPago,
+          metodo_pago: formData.metodo_pago,
           total: formData.total,
-          tipoEntrega: formData.tipoEntrega,
+          tipo_entrega: formData.tipo_entrega,
           cantidad: formData.cantidad,
-          detallesPedido: formData.detallesPedido,
-          estado: formData.estado,
-          usuario: {
-            nombre: usuario.nombre,
-            apellido: usuario.apellido,
-            numero_documento: usuario.numero_documento,
-            direccion: usuario.direccion,
-            barrio: usuario.barrio,
-            idusuario: usuario.id,
-          },
-          carrito,
+          comentarios: formData.comentarios,
+          estado_pedido: formData.estado_pedido,
+          id_usuario: usuario.id_usuario, // Asegúrate de pasar el ID del usuario
+          productos: carrito.map((producto) => ({
+            id_producto: producto.id_producto,
+            cantidad_unidad: producto.cantidad,
+            precio_unidad: producto.precio,
+          })),
         }),
       });
+  
   
       if (response.ok) {
         Swal.fire({
@@ -126,13 +122,12 @@ const DetallesPedido = () => {
         setFormData({
           fecha: new Date().toISOString().split('T')[0],
           hora: '',
-          metodoPago: '',
+          metodo_pago: '',
           total: '',
-          tipoEntrega: '',
+          tipo_entrega: '',
           cantidad: 0,
-          detallesPedido: '',
-          estado: 'activo',
-          pedidoId: Math.floor(Math.random() * 1000000),
+          comentarios: '',
+          estado_pedido: 'Pendiente',
         });
         setAcceptedTerms(false); // Reseteamos el checkbox
         setModalVisible(false); // Cerramos el modal
@@ -193,14 +188,14 @@ const DetallesPedido = () => {
 
           {/* Método de Pago y Total */}
           <div>
-            <label htmlFor="metodoPago" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="metodo_pago" className="block text-sm font-medium text-gray-700">
               <FontAwesomeIcon icon={faCreditCard} className="text-yellow-500 mr-2" /> Método de Pago
               <span className="text-red-500 text-lg ml-1">*</span> {/* Asterisco rojo */}
             </label>
-            <select id="metodoPago" name="metodoPago" value={formData.metodoPago} onChange={handleChange} className="mt-1 p-2 w-full border border-yellow-500 rounded-md">
-              <option value="credito">Tarjeta de Crédito</option>
-              <option value="nequi">Nequi</option>
-              <option value="Daviplata">Daviplata</option>
+            <select id="metodo_pago" name="metodo_pago" value={formData.metodo_pago} onChange={handleChange} className="mt-1 p-2 w-full border border-yellow-500 rounded-md">
+              <option value="Tarjeta">Tarjeta de Crédito</option>
+              <option value="Transferencia">Nequi/Daviplata</option>
+              <option value="Efectivo">Efectivo</option>
             </select>
           </div>
 
@@ -222,13 +217,13 @@ const DetallesPedido = () => {
 
           {/* Tipo de Entrega */}
           <div className="mt-4">
-          <label htmlFor="tipoEntrega" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="tipo_entrega" className="block text-sm font-medium text-gray-700">
             <FontAwesomeIcon icon={faTruck} className="text-yellow-500 mr-2" /> Tipo de Entrega
             <span className="text-red-500 text-lg ml-1">*</span> {/* Asterisco rojo */}
           </label>            
-            <select id="tipoEntrega" name="tipoEntrega" value={formData.tipoEntrega} onChange={handleChange} className="mt-1 p-2 w-full border border-yellow-500 rounded-md">
-              <option value="recogida">Recogida en Tienda</option>
-              <option value="envio">Envío a Domicilio</option>
+            <select id="tipo_entrega" name="tipo_entrega" value={formData.tipo_entrega} onChange={handleChange} className="mt-1 p-2 w-full border border-yellow-500 rounded-md">
+              <option value="Recoger en tienda">Recogida en Tienda</option>
+              <option value="Domicilio">Envío a Domicilio</option>
             </select>
           </div>
 
@@ -250,13 +245,13 @@ const DetallesPedido = () => {
 
           {/* Detalles del Pedido */}
           <div className="mt-4 col-span-2">
-            <label htmlFor="detallesPedido" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="comentarios" className="block text-sm font-medium text-gray-700">
               <FontAwesomeIcon icon={faComment} className="text-yellow-500 mr-2" /> Detalles del Pedido(opcional)
             </label>
             <textarea
-              id="detallesPedido"
-              name="detallesPedido"
-              value={formData.detallesPedido}
+              id="comentarios"
+              name="comentarios"
+              value={formData.comentarios}
               onChange={handleChange}
               className="mt-1 p-2 w-full border border-yellow-500 rounded-md"
               rows="2"

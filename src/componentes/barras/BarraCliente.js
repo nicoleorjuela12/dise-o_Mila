@@ -121,7 +121,7 @@ const BarraCliente = () => {
             </div>
 
 
-            <Link to="/pedidos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+            <Link to="/pedidoss" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
               <FontAwesomeIcon icon={faShoppingBasket} className="mr-2" /> Pedidos
             </Link>
             <div className="relative">
@@ -202,7 +202,7 @@ const BarraCliente = () => {
               )}
             </div>
             
-            <Link to="/pedidos" className="text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>
+            <Link to="/pedidoss" className="text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>
               <FontAwesomeIcon icon={faShoppingBasket} className="mr-2" /> Pedidos
             </Link>
             <Link to="/eventos" className="text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>

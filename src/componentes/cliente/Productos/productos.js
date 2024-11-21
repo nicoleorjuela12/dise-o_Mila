@@ -95,18 +95,35 @@ const ProductosCliente = () => {
 
     const agregarAlCarrito = () => {
       // Obtiene el carrito guardado en el localStorage
-       const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
-    const productoExistente = carritoGuardado.find(item => item.id_producto === producto.id_producto);
-
-    if (productoExistente) {
-        productoExistente.cantidad += cantidad;
-    } else {
-        carritoGuardado.push({ ...producto, cantidad });
-    }
-
-    setCarrito(carritoGuardado);
-    localStorage.setItem('carrito', JSON.stringify(carritoGuardado));
-    Swal.fire({
+      const carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+      
+      // Verificar si el producto ya está en el carrito
+      const productoExistente = carritoGuardado.find(item => item.id_producto === producto.id_producto);
+    
+      if (productoExistente) {
+        // Si el producto ya está en el carrito, aumentamos la cantidad
+        if (productoExistente.cantidad < 10) {
+          productoExistente.cantidad += 1;
+        } else {
+          // Si la cantidad ya está en el límite (10), mostramos un mensaje
+          Swal.fire({
+            title: 'Cantidad máxima alcanzada',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+          });
+          return; // Detenemos la ejecución si no se puede agregar más
+        }
+      } else {
+        // Si el producto no está en el carrito, lo agregamos con cantidad 1
+        carritoGuardado.push({ ...producto, cantidad: 1 });
+      }
+    
+      // Guardar el carrito actualizado en el localStorage
+      setCarrito(carritoGuardado);
+      localStorage.setItem('carrito', JSON.stringify(carritoGuardado));
+    
+      // Mostrar mensaje de éxito
+      Swal.fire({
         title: `¡${producto.nombre} añadido al carrito!`,
         icon: 'success',
         confirmButtonText: 'Ir al carrito',
@@ -114,16 +131,15 @@ const ProductosCliente = () => {
         cancelButtonText: 'Seguir comprando',
         confirmButtonColor: '#f59e0b',
         cancelButtonColor: '#1f2937',
-    }).then(result => {
+      }).then(result => {
         if (result.isConfirmed) {
-            navigate('/carrito');
-        } else if (result.isDismissed) {
-            // Aquí puedes manejar la acción si el usuario hace clic en 'Seguir comprando'
-            console.log('Usuario decidió seguir comprando');
+          navigate('/carrito');
+        } else {
+          console.log('Usuario decidió seguir comprando');
         }
-    });
-
-}
+      });
+    };
+    
 
 
     return (

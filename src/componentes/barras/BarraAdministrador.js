@@ -131,7 +131,7 @@ const BarraAdmin = () => {
             title="Usuarios" 
             icon={faUsers} 
             links={[
-              { name: 'Registro usuarios', path: '/regsitroempleados' },
+              { name: 'Registro usuarios', path: '/registroempleados' },
               { name: 'Consulta usuarios', path: '/consultausarios' },
             ]}
             onMenuClose={closeUserMenu}

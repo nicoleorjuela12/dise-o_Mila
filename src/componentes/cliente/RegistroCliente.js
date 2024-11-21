@@ -100,7 +100,7 @@ const FormularioRegistro = () => {
   };
 
 
-  const verificarUsuarioExistente = async () => {
+const verificarUsuarioExistente = async () => {
     try {
         const response = await axios.post('http://localhost:8000/usuarios/verificar-usuario/', {
             numero_documento: formData.numero_documento,
