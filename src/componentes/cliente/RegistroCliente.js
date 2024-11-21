@@ -2,6 +2,7 @@ import React, { useState } from 'react'; // Importa useState
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { API_URL } from "../../config"
 
 
 const FormularioRegistro = () => {
@@ -102,7 +103,7 @@ const FormularioRegistro = () => {
 
 const verificarUsuarioExistente = async () => {
     try {
-        const response = await axios.post('http://localhost:8000/usuarios/verificar-usuario/', {
+        const response = await axios.post(`${API_URL}/verificar-usuario`, {
             numero_documento: formData.numero_documento,
             correo: formData.correo,
         });
