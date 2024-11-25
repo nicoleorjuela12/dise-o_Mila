@@ -22,6 +22,12 @@ FROM nginx:alpine
 # Copiar los archivos construidos de la fase anterior
 COPY --from=build /app/build /usr/share/nginx/html
 
+# (Opcional) Copiar archivo de configuración de Nginx si es necesario
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# Cambiar a un usuario no root (opcional, si se tienen problemas con permisos)
+USER nginx
+
 # Exponer el puerto 80 para que la app sea accesible
 EXPOSE 80
 
