@@ -53,7 +53,7 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post(`${API_URL}/usuarios/usuarios/login`, {
+            const response = await axios.post(`${API_URL}/usuarios/login`, {
                 numero_documento,
                 contrasena
             }, {
