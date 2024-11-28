@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import API_URL from '../../../config/config'; 
 
 
+
 const ReservaMesa = () => {
 const [formData, setFormData] = useState({
     nombre: '',
@@ -197,9 +198,7 @@ return (
 
         <section className="min-h-screen relative mt-12">
             <div className="background-overlay"></div>
-            <div className="reservation-form">
-            <h2 className='titulo' >Personaliza tu reserva de mesa</h2>
-
+            <div className="reservation-form"><br></br>
 
             <form id="reservation-form" className='reservation-form' onSubmit={handleSubmit}>
                 <div className='container-layout'>
@@ -223,7 +222,7 @@ return (
         {errors.nombre && <p className="error text-red-500">{errors.nombre}</p>}
 
         <label className="flex items-center mt-4">
-            <i className="fas fa-mobile-alt mr-2 text-[#c59d3f]"></i> Celular:
+            <i className="fas fa-mobile-alt mr-2 text-[#c59d3f]"></i> telefono:
         </label>
         <input
             className="block appearance-none w-full bg-gray-100 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] text-center shadow-sm transition duration-200 ease-in-out border-2 border-[#d1d5db]"
@@ -285,15 +284,15 @@ return (
             
 
     <div className="container_datos select-date-container shadow-lg p-4 bg-white rounded border-2 border-[#5a3e23]">
-        <h2 className="text-center mb-2 text-2xl font-bold text-black">Información de la Reserva</h2>
+        <h2 className="text-center mb-2 text-2xl font-bold text-black">Información Reserva Mesa</h2>
         <div className="border-b-2 border-[#e2b16d] w-3/4 mx-auto mb-4"></div> {/* Línea dorada más ancha que el título */}
 
         <label className="flex items-center mt-4">
             <i className="fas fa-users mr-2 text-[#c59d3f]"></i> Número de personas:
         </label>
         <select
-            className="block appearance-none w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] shadow-sm transition duration-200 ease-in-out border-2 border-[#5a3e23]"
-            name="numero_personas"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="numero_personas"
             value={formData.numero_personas}
             onChange={handleChange}
             required
@@ -309,8 +308,8 @@ return (
             <i className="fas fa-calendar-alt mr-2 text-[#c59d3f]"></i> Fecha:
         </label>
         <input
-            className="block appearance-none w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] shadow-sm transition duration-200 ease-in-out border-2 border-[#5a3e23]"
-            name="fecha"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="fecha"
             type="date"
             value={formData.fecha}
             onChange={handleChange}
@@ -324,8 +323,8 @@ return (
             <i className="fas fa-clock mr-2 text-[#c59d3f]"></i> Hora de Inicio:
         </label>
         <input
-            className="block appearance-none w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] shadow-sm transition duration-200 ease-in-out border-2 border-[#5a3e23]"
-            name="horainicio"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="horainicio"
             type="time"
             value={formData.horainicio}
             onChange={handleChange}
@@ -337,8 +336,8 @@ return (
             <i className="fas fa-clock mr-2 text-[#c59d3f]"></i> Hora de Finalizacion:
         </label>
         <input
-            className="block appearance-none w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] shadow-sm transition duration-200 ease-in-out border-2 border-[#5a3e23]"
-            name="horafin"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="horafin"
             type="time"
             value={formData.horafin}
             onChange={handleChange}
@@ -350,8 +349,8 @@ return (
             <i className="fas fa-paint-brush mr-2 text-[#c59d3f]"></i> Elige la decoración:
         </label>
         <select 
-            className="block appearance-none w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] shadow-sm transition duration-200 ease-in-out border-2 border-[#5a3e23]" 
-            id="grid-services"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                id="grid-services"
             name="decoracion"
             value={formData.decoracion}
             onChange={handleChange}
@@ -371,11 +370,11 @@ return (
         {/* Tipo de Servicio con Ícono */}
         <div className="relative">
             <label className="flex items-center">
-                <i className="fas fa-concierge-bell mr-2 text-[#c59d3f]"></i> {/* Ícono de servicio */}
+                <i className="fas fa-concierge-bell mr-2 text-[#e2b16d]"></i> {/* Ícono de servicio */}
                 Tipo de Servicio
             </label>
             <select 
-                className="block appearance-none w-full bg-white text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#c59d3f] focus:shadow-lg border-[#4b3621] border-2 transition duration-200 ease-in-out"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
                 id="grid-services"
                 name="actividades"
                 value={formData.actividades}
@@ -391,20 +390,21 @@ return (
         
         {/* Comentarios con Ícono */}
         <div className="mt-4">
-            <label className="flex items-center">
-                <i className="fas fa-comments mr-2 text-[#c59d3f]"></i> {/* Ícono de comentarios */}
-                Comentarios:
-            </label>
-            <input 
-                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#c59d3f] focus:shadow-lg border-[#4b3621] border-2 transition duration-200 ease-in-out"
+    <label className="flex items-center">
+        <i className="fas fa-comments mr-2 text-[#c59d3f]"></i> {/* Ícono de comentarios */}
+        Comentarios:
+    </label>
+    <textarea 
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
                 id="grid-comments"
-                type="text"
-                name="comentarios"
-                value={formData.comentarios}
-                onChange={handleChange} 
-            />
-            <p className="text-black-500 text-xs italic mt-1">Puedes escribir observaciones sobre tu reserva o peticiones adicionales (No estamos obligados a realizar estas peticiones extra)</p>
-        </div>
+        name="comentarios"
+        value={formData.comentarios}
+        onChange={handleChange}
+        rows="4" // Define un número inicial de filas visibles
+    />
+    <p className="text-black-500 text-xs italic mt-1">Puedes escribir observaciones sobre tu reserva o peticiones adicionales (No estamos obligados a realizar estas peticiones extra)</p>
+</div>
+
     </div>
                 <button type="submit" className="continue-btn">Continuar</button>
             </form>
@@ -436,152 +436,144 @@ return (
         )}
         
         <style>{`
-        .nombre {
-        background-color: #f8f8f8;
-        }
 
-        .error {
-        color: red;
-        font-size: 0.875rem;
-        margin-top: -1px;
-        margin-bottom: 10px;
-        }
+/* Container Layout (for alignment) */
+.container-layout {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px; /* Ajustado para dar espacio adecuado después del título */
+    flex-wrap: wrap;
+}
 
-        body {
-        position: relative;
-        margin: 0;
-        height: 100%;
-        width: 100%; /* Asegúrate de que el body ocupe toda la altura de la ventana */
-        }
+/* Container Styling (User & Data Sections) */
+.container_usuario, .container_datos {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    backdrop-filter: blur(12px);
+    width: 40%; /* Reducido aún más el tamaño de las cards */
+    border: 2px solid #ffd700; /* Gold border */
+    /* Eliminar transiciones */
+}
 
-        .titulo {
-        font-family: 'Merriweather';
-        font-size: 65px;
-        color: Black;
-        text-align: center;
-        position: absolute;
-        margin-top: 10px;
-        width: 105%;
-        }
+/* Container for Service Type and Comments */
+.containerr {
+    width: 80%; /* Mismo ancho que las otras dos cards */
+    margin: 50px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    border: 2px solid #ffd700;
+    position: relative;
+    /* Eliminar transiciones */
+}
 
-        .background-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        filter: brightness(50%);
-        z-index: -1;
-        }
+/* Labels */
+label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
 
-        .reservation-form {
-        display: flex;
-        align-items: center;
-        justify-content: space-between; /* Coloca los dos contenedores uno al lado del otro */
-        align-items: flex-start;
-        gap: 20px; /* Espacio entre los contenedores */
-        margin-bottom: 20px; /* Separación con el contenedor inferior */
-        flex-wrap: wrap; /* Esto asegura que los contenedores no se salgan de la pantalla */
-        }
+/* Error message styling */
+.error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: -5px;
+    margin-bottom: 15px;
+}
 
-        /* Contenedor que envuelve los dos principales */
-        .container-layout {
-        display: flex;
-        justify-content: center; /* Mantiene los dos contenedores alineados horizontalmente */
-        gap: -5px; /* Espaciado entre ellos */
-        margin-bottom: 5px; /* Espaciado con el siguiente contenedor */
-        width: 100%; /* Abarca el ancho completo */
-        margin-top: 70px
-        }
+/* Terms section (positioned at the bottom) */
+.terminos {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    height: 80px;
+    position: absolute;
+    bottom: 100px; /* Mantener una distancia adecuada entre el fondo */
+    left: 50%;
+    transform: translateX(-50%); /* Centramos el contenedor de términos horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    z-index: 1;
+    padding-top: 20px; /* Espacio adicional para separar el texto del borde superior */
+    padding-bottom: 20px; /* Espacio adicional para separar el texto del borde inferior */
+}
+    .terminos input[type="checkbox"] {
+    vertical-align: middle; /* Alineación del checkbox con el texto */
+    margin-right: 10px; /* Espacio entre el checkbox y el texto */
+}
 
-        /* Mantén los estilos de los contenedores que no quieres modificar */
-        .container_usuario, .container_datos {
-        background-color: rgba(255, 255, 255, 0.5);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        backdrop-filter: blur(10px);
-        width: 48%; /* Cada contenedor ocupa aproximadamente la mitad del espacio disponible */
-        border: 2px solid gold;
-        margin: 70px;
-        }
+/* Si hay un texto largo, se ajusta automáticamente */
+.terminos label {
+    line-height: 1.4; /* Añadir espacio entre las líneas del texto */
+}
 
-        /* Contenedor del Tipo de Servicio y Comentarios ajustado */
-        .containerr {
-        width: 100%; /* Ocupa el ancho completo que suman los contenedores de arriba */
-        margin: 70px; /* Centrado del contenedor */
-        margin-top: -40px; /* Separación desde los otros dos contenedores */
-        border: 2px solid gold;
-        background-color: rgba(255, 255, 255, 0.5);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        }
+/* Ajustamos la posición del botón de continuar */
+.continue-btn {
+    width: auto;
+    background-color: #ffd700;
+    color: #1f1f1f;
+    padding: 18px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 140px; /* Aumentado para mover el botón aún más abajo */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px; /* Espaciado adicional para no estar pegado al fondo */
+}
 
-        h2 {
-        color: #000;
-        margin-bottom: 10px;
-        }
-        
-        .terminos {
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            border: 2px solid gold;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 400px; /* Ajuste consistente de tamaño */
-            height: 70px;
-            position: absolute; /* Cambiado a fixed */
-            bottom: 1px; /* Espaciado desde el fondo */
-            left: 50%; /* Centrado horizontalmente */
-            transform: translateX(-50%); /* Ajusta el centro */
-            display: flex;
-            justify-content: center; /* Centra el contenido dentro del contenedor */
-            align-items: center; /* Centra el contenido verticalmente */
-        }
+/* Button hover effect */
+.continue-btn:hover {
+    background-color: #ffcc00;
+    transform: none; /* Eliminar la transición exagerada */
+}
 
-        label {
-        color: #000;
-        display: block;
-        margin-bottom: 5px;
-        }
+/* Additional styling tweaks for a more polished look */
+.titulo, h2, label {
+    font-family: 'Poppins', sans-serif;
+}
 
-        .input-field {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        text-align: center;
-        }
+/* Estilo para hacer que el textarea se expanda automáticamente */
+textarea {
+    resize: none; /* Deshabilita la opción de redimensionar manualmente */
+    overflow-y: auto; /* Añade barra de desplazamiento si es necesario */
+    min-height: 120px; /* Altura mínima para el textarea */
+    max-height: 300px; /* Limita la altura máxima */
+}
 
-        .continue-btn {
-        position: absolute; /* Fijo en la parte inferior de la pantalla */
-        bottom: 0;
-        width: 120%; /* Ocupa todo el ancho */
-        background-color: gold;
-        color: #000000;
-        padding: 15px;
-        border: none;
-        border-radius: 0;
-        cursor: pointer;
-        text-align: center;
-        margin: -70px; /* Ajusta este margen según sea necesario */
-    }
-        .continue-btn:hover {
-        background-color: rgb(253, 216, 53);
-        }
-
-        
-    `}</style>
+/* Asegúrate de que el borde se vea bien al enfocar */
+textarea:focus {
+    border-color: #ffd700;
+    background-color: #fff;
+}
 
 
-    
+`}</style>
+
+
+
+
     </div>
 );
 };

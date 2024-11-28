@@ -7,7 +7,7 @@ import API_URL from '../../../config/config';
 const ReservaLocal = () => {
   const [formData, setFormData] = useState({
     nombre: '',
-    celular: '',
+    telefono: '',
     correo: '',
     numero_documento: false,
     numero_personas: '',
@@ -38,7 +38,7 @@ const ReservaLocal = () => {
         setFormData((prevFormData) => ({
           ...prevFormData,
           nombre: user.nombre || '',
-          celular: user.telefono || '',
+          telefono: user.telefono || '',
           correo: user.correo || '',
           numero_documento: user.numero_documento || '',
           id_usuario: user.id || ''
@@ -186,11 +186,27 @@ const ReservaLocal = () => {
       const response = await axios.post(`${API_URL}/usuarios/reservalocal`, reservaData);
       console.log("Respuesta del servidor:", response.data); // Agrega esta línea para ver la respuesta
 
-      Swal.fire('¡Éxito!', 'La reserva ha sido registrada correctamente', 'success');
+      Swal.fire({
+        title: '¡Éxito!',
+        text: 'La reserva ha sido registrada correctamente',
+        icon: 'success',
+        background: '#fff5e1', // Fondo claro
+        color: '#d4af37', // Color dorado del texto
+        confirmButtonColor: '#d4af37', // Color dorado del botón
+        confirmButtonText: 'Aceptar',
+        iconColor: '#d4af37', // Color dorado del icono
+        customClass: {
+          popup: 'rounded-lg', // Bordes redondeados
+          title: 'text-xl font-semibold', // Estilo para el título
+          content: 'text-md', // Estilo para el contenido
+          confirmButton: 'px-6 py-3 font-semibold border-none rounded-lg' // Estilo para el botón de confirmación
+        }
+      });
+      
 
       setFormData({
         nombre: '',
-        celular: '',
+        telefono: '',
         correo: '',
         numero_documento: '',
         numero_personas: '',
@@ -229,18 +245,26 @@ const ReservaLocal = () => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Formulario de Reserva local</title>
       <link rel="icon" type="image/png" href="https://i.ibb.co/gj0Bpcc/logo-empresa-mila.png" />
-      <section className="min-h-screen relative">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  
+      <section className="min-h-screen relative mt-12">
         <div className="background-overlay"></div>
-        <div className="reservation-form">
-          <h2 className='titulo'>Personaliza la reserva del local</h2>
-          <form id="reservation-form" className='reservation-form' onSubmit={handleSubmit}>
-            <div className='container-layout'>
-              <div className="container_usuario select-people-container">
-                <h2>Datos del Usuario</h2>
-                <label>Nombre:</label>
+        <div className="reservation-form"><br></br>
+          
+  
+          <form id="reservation-form" className="reservation-form" onSubmit={handleSubmit}>
+            <div className="container-layout">
+              
+              {/* Card para Datos del Usuario */}
+              <div className="container_usuario select-people-container shadow-lg p-4 bg-white rounded border-2 border-[#e2b16d]">
+                <h2 className="text-center mb-2 text-2xl font-bold text-black">Datos del Usuario</h2>
+                <div className="border-b-2 border-[#e2b16d] w-3/4 mx-auto mb-4"></div>
+  
+                <label className="flex items-center">
+                  <i className="fas fa-user mr-2 text-[#c59d3f]"></i> Nombre:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="block appearance-none w-full bg-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#fcd8a9] text-center"
+                  className="block appearance-none w-full bg-gray-100 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] text-center shadow-sm transition duration-200 ease-in-out border-2 border-[#d1d5db]"
                   name="nombre"
                   type="text"
                   value={formData.nombre}
@@ -248,25 +272,27 @@ const ReservaLocal = () => {
                   required
                   readOnly
                 />
-                {errors.nombre && <p className="error">{errors.nombre}</p>}
-
-                <label>Celular:</label>
+                {errors.nombre && <p className="error text-red-500">{errors.nombre}</p>}
+  
+                <label className="flex items-center mt-4">
+                  <i className="fas fa-mobile-alt mr-2 text-[#c59d3f]"></i> telefono:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="block appearance-none w-full bg-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#fcd8a9] text-center"
-                  name="celular"
+                  className="block appearance-none w-full bg-gray-100 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] text-center shadow-sm transition duration-200 ease-in-out border-2 border-[#d1d5db]"
+                  name="telefono"
                   type="text"
-                  value={formData.celular}
+                  value={formData.telefono}
                   onChange={handleChange}
                   required
                   readOnly
                 />
-                {errors.celular && <p className="error">{errors.celular}</p>}
-
-                <label>Correo:</label>
+                {errors.telefono && <p className="error text-red-500">{errors.telefono}</p>}
+  
+                <label className="flex items-center mt-4">
+                  <i className="fas fa-envelope mr-2 text-[#c59d3f]"></i> Correo:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="block appearance-none w-full bg-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#fcd8a9] text-center"
+                  className="block appearance-none w-full bg-gray-100 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] text-center shadow-sm transition duration-200 ease-in-out border-2 border-[#d1d5db]"
                   name="correo"
                   type="email"
                   value={formData.correo}
@@ -274,12 +300,13 @@ const ReservaLocal = () => {
                   required
                   readOnly
                 />
-                {errors.correo && <p className="error">{errors.correo}</p>}
-                
-                <label>Número de Documento:</label>
+                {errors.correo && <p className="error text-red-500">{errors.correo}</p>}
+  
+                <label className="flex items-center mt-4">
+                  <i className="fas fa-id-card mr-2 text-[#c59d3f]"></i> Número de Documento:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="block appearance-none w-full bg-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#fcd8a9] text-center"
+                  className="block appearance-none w-full bg-gray-100 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-[#e2b16d] text-center shadow-sm transition duration-200 ease-in-out border-2 border-[#d1d5db]"
                   name="numero_documento"
                   type="text"
                   value={formData.numero_documento}
@@ -287,43 +314,50 @@ const ReservaLocal = () => {
                   required
                   readOnly
                 />
-                {errors.numero_documento && <p className="error">{errors.numero_documento}</p>}
+                {errors.numero_documento && <p className="error text-red-500">{errors.numero_documento}</p>}
               </div>
+  
+              {/* Card para Información de la Reserva */}
+              <div className="container_datos select-date-container shadow-lg p-4 bg-white rounded border-2 border-[#e2b16d]">
+                <h2 className="text-center mb-2 text-2xl font-bold text-black">Información Reserva Local</h2>
+                <div className="border-b-2 border-[#e2b16d] w-3/4 mx-auto mb-4"></div>
+                
+                <label className="flex items-center mt-4 text-[#4b3621] hover:text-[#c59d3f] focus-within:text-[#c59d3f]">
+                <i className="fas fa-users mr-2 text-[#c59d3f]"></i> Número de personas:
+                </label>
+              <input
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="numero_personas"
+                type="number"
+                min="15"
+                max="50"
+                value={formData.numero_personas}
+                onChange={handleChange}
+                required
+              />
 
-              <div className="container_datos select-date-container">
-                <h2>Información de la Reserva</h2>
-                <label>Número de personas:</label>
-                <input 
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="input-field"
-                  name="numero_personas"
-                  type="number"
-                  min="15"
-                  max="50"
-                  value={formData.numero_personas}
-                  onChange={handleChange}
-                  required
-                />
                 {errors.numero_personas && <p className="error">{errors.numero_personas}</p>}
-
-                <label>Fecha:</label>
+  
+                <label className="flex items-center mt-4">
+                  <i className="fas fa-calendar-alt mr-2 text-[#c59d3f]"></i> Fecha:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="input-field"
-                  name="fecha"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="fecha"
                   type="date"
                   value={formData.fecha}
                   onChange={handleChange}
-                  min={new Date().toISOString().split('T')[0]} // Fecha de hoy
-                  max={new Date(new Date().getFullYear(), 11, 31).toISOString().split('T')[0]} // Último día del año
+                  min={new Date().toISOString().split('T')[0]}
+                  max={new Date(new Date().getFullYear(), 11, 31).toISOString().split('T')[0]}
                   required
                 />
                 {errors.fecha && <p className="error">{errors.fecha}</p>}
-
-                <label>Hora de Inicio:</label>
+  
+                <label className="flex items-center mt-4">
+                  <i className="fas fa-clock mr-2 text-[#c59d3f]"></i> Hora de Inicio:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="input-field"
+                  className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
                   name="horainicio"
                   type="time"
                   value={formData.horainicio}
@@ -331,12 +365,13 @@ const ReservaLocal = () => {
                   required
                 />
                 {errors.horainicio && <p className="error">{errors.horainicio}</p>}
-
-                <label>Hora Fin:</label>
+  
+                <label className="flex items-center mt-4">
+                  <i className="fas fa-clock mr-2 text-[#c59d3f]"></i> Hora de Finalización:
+                </label>
                 <input
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="input-field"
-                  name="horafin"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                name="horafin"
                   type="time"
                   value={formData.horafin}
                   onChange={handleChange}
@@ -350,9 +385,8 @@ const ReservaLocal = () => {
               <div className="relative">
                 <label>Tipo de Servicio</label>
                 <select 
-                  style={{ border: '2px solid #fcd8a9' }}
-                  className="input-field"
-                  id="grid-services"
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                id="grid-services"
                   name="tipo_servicios"
                   value={formData.tipo_servicios}
                   onChange={handleChange}
@@ -366,21 +400,21 @@ const ReservaLocal = () => {
                 {errors.tipo_servicios && <p className="error">{errors.tipo_servicios}</p>}
               </div>
               
-              <div>
-                <label>
-                  <i className="fas fa-comments icon mr-2" />
-                  Comentarios:
-                </label>
-                <input 
-                  className='input-field'
-                  id="grid-comments"
-                  type="text"
-                  name='comentarios' 
-                  value={formData.comentarios}
-                  onChange={handleChange} 
-                />
-                <p className="text-black-500 text-xs italic">Puedes escribir observaciones sobre tu reserva o peticiones adicionales(No estamos obligados a realizar estas peticiones extra)</p>
-              </div>
+              <div className="mt-4">
+    <label className="flex items-center">
+        <i className="fas fa-comments mr-2 text-[#e2b16d]"></i> {/* Ícono de comentarios */}
+        Comentarios:
+    </label>
+    <textarea 
+                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                id="grid-comments"
+        name="comentarios"
+        value={formData.comentarios}
+        onChange={handleChange}
+        rows="4" // Define un número inicial de filas visibles
+    />
+    <p className="text-black-500 text-xs italic mt-1">Puedes escribir observaciones sobre tu reserva o peticiones adicionales (No estamos obligados a realizar estas peticiones extra)</p>
+</div>
             </div>
 
             <div className="terminos">
@@ -401,7 +435,7 @@ const ReservaLocal = () => {
               {errors.terminos && <p className="error">{errors.terminos}</p>}
             </div>
 
-            <button type="submit" className="continue-btn">Continuar</button>
+            <button type="submit" className="continue-btn text-center bg-yellow-50 hover:bg-yellow-400 transition-colors duration-300">Continuar</button>
           </form>
         </div>
       </section>
@@ -431,167 +465,124 @@ const ReservaLocal = () => {
       )}
     
     <style>{`
-        /* Estilos generales */
-        .nombre {
-          background-color: #f8f8f8;
-        }
+    /* permite que los cuadros del formulario esten en la posición que estan*/
+    .container-layout {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px; /* Ajustado para dar espacio adecuado después del título */
+      flex-wrap: wrap;
+    }
 
-        .error {
-          color: red;
-          font-size: 0.875rem;
-          margin-top: -10px;
-          margin-bottom: 10px;
-        }
-        
-        body {
-            position: relative;
-            margin: 0;
-            height: 100%;
-            width: 100%; /* Asegúrate de que el body ocupe toda la altura de la ventana */
-        }
+    /* tamaño de los cuadros de los formularios*/
+    .container_usuario, .container_datos {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      backdrop-filter: blur(12px);
+      width: 40%; /* Reducido aún más el tamaño de las cards */
+      border: 2px solid #ffd700; /* Gold border */
+      /* Eliminar transiciones */
+    }
 
-        .titulo {
-            font-family: 'Bold';
-            font-size: 80px;
-            color: Black;
-            text-align: center;
-            position: absolute;
-            margin-top: 10px;
-            justify-content: center;
-            width: 86%;
-        }
+    /* Container for Service Type and Comments */
+    .containerr {
+      width: 80%; /* Mismo ancho que las otras dos cards */
+      margin: 50px auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(12px);
+      border: 2px solid #ffd700;
+      position: relative;
+      /* Eliminar transiciones */
+    }
 
-        .background-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-size: cover;
-          background-position: center;
-          filter: brightness(50%);
-          z-index: -1;
-        }
+    /* Estilo para las etiquetas */
+    label {
+      font-size: 14px;
+      color: #333;
+      display: block;
+      margin-bottom: 10px;
+    }
 
-        .reservation-form {
-          display: flex;
-          align-items: center;
-          justify-content: space-between; /* Coloca los dos contenedores uno al lado del otro */
-          align-items: flex-start;
-          gap: 20px; /* Espacio entre los contenedores */
-          margin-bottom: 20px; /* Separación con el contenedor inferior */
-          flex-wrap: wrap; /* Esto asegura que los contenedores no se salgan de la pantalla */
-        }
+    /* Estilo para los mensajes de error boton terminos y condiciones */
+    .error {
+      color: #ff4d4d;
+      font-size: 0.9rem;
+      margin-top: -5px;
+      margin-bottom: 2px;
+    }
 
-        /* Contenedor que envuelve los dos principales */
-        .container-layout {
-          display: flex;
-          justify-content: center; /* Mantiene los dos contenedores alineados horizontalmente */
-          gap: -5px; /* Espaciado entre ellos */
-          margin-bottom: 5px; /* Espaciado con el siguiente contenedor */
-          width: 100%; /* Abarca el ancho completo */
-          margin-top: 70px
-        }
-        
-        .terminos {
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            border: 2px solid gold;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-top: 80px;
-            width: 300px; /* Ajuste consistente de tamaño */
-            height: 70px;
-            position: absolute; /* Cambiado a fixed */
-            bottom: 1px; /* Espaciado desde el fondo */
-            left: 50%; /* Centrado horizontalmente */
-            transform: translateX(-50%); /* Ajusta el centro */
-            display: flex;
-            justify-content: center; /* Centra el contenido dentro del contenedor */
-            align-items: center; /* Centra el contenido verticalmente */
-        }
+    /* Términos y Condiciones */
+    .terminos {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border: 2px solid #ffd700;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 400px;
+      height: 80px;
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%); 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: #333;
+      z-index: 1;
+      padding-top: 20px; 
+      padding-bottom: 20px; 
+    }
 
-            /* Mantén los estilos de los contenedores que no quieres modificar */
-        .container_usuario, .container_datos {
-          background-color: rgba(255, 255, 255, 0.5);
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          text-align: center;
-          backdrop-filter: blur(10px);
-          width: 48%; /* Cada contenedor ocupa aproximadamente la mitad del espacio disponible */
-          border: 2px solid gold;
-          margin: 70px;
-        }
+    .terminos input[type="checkbox"] {
+      vertical-align: middle;
+      margin-right: 10px; 
+     }
 
-        .containerr {
-          width: 100%; /* Ocupa el ancho completo que suman los contenedores de arriba */
-          margin: 70px; /* Centrado del contenedor */
-          margin-top: -40px; /* Separación desde los otros dos contenedores */
-          border: 2px solid gold;
-          background-color: rgba(255, 255, 255, 0.5);
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(10px);
-        }
+    .terminos label {
+     line-height: 1.4;
+    }
 
+    /* Ajustamos la posición del botón de continuar */
+    .continue-btn {
+      width: auto;
+      background-color: #ffd700;
+      color: #1f1f1f;
+      padding: 18px 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      margin-top: 140px; /* Aumentado para mover el botón aún más abajo */
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px; /* Espaciado adicional para no estar pegado al fondo */
+    }
 
+    /* Estilo para los títulos de secciones */
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 600;
+    }
 
-        .container {
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            backdrop-filter: blur(10px);
-            width: 400px; /* Ajuste consistente de tamaño */
-            margin-top: -170px;
-            margin-left: 50px;
-            border: 2px solid gold;
-        }
+    /* Fuente y tamaño de las etiquetas */
+      .titulo, h2, label {
+      font-family: 'Poppins', sans-serif;
 
-        h2 {
-          color: #000;
-          margin-bottom: 10px;
-        }
-
-        label {
-          color: #000;
-          display: block;
-          margin-bottom: 5px;
-        }
-
-        .input-field {
-          width: 100%;
-          padding: 10px;
-          margin-bottom: 15px;
-          border-radius: 5px;
-          border: 1px solid #ccc;
-          text-align: center;
-        }
-
-      
-        /* Botón de continuar */
-        .continue-btn {
-          position: absolute; /* Fijo en la parte inferior de la pantalla */
-          bottom: 0;
-          width: 100%; /* Ocupa todo el ancho */
-          background-color: gold;
-          color: #000000;
-          padding: 15px ;
-          border: none;
-          border-radius: 0;
-          cursor: pointer;
-          text-align: center;
-          margin: -70px;
-        }
-
-        .continue-btn:hover {
-           background-color: rgb(253, 216, 53);
-        }
-      `}</style>
+    `}</style>
     
     </div>
   );
