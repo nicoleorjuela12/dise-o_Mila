@@ -91,6 +91,7 @@ const Carrito = () => {
       confirmButtonText: 'OK',
     });
   };
+  
 
   const aumentarCantidad = (index) => {
     const nuevoCarrito = [...carrito];
@@ -106,6 +107,7 @@ const Carrito = () => {
       });
     }
   };
+  
 
   const disminuirCantidad = (index) => {
     const nuevoCarrito = [...carrito];
@@ -121,6 +123,7 @@ const Carrito = () => {
       });
     }
   };
+  
 
   const vaciarCarrito = () => {
     setCarrito([]);
@@ -132,6 +135,12 @@ const Carrito = () => {
   const calcularSubtotal = useMemo(() => {
     return carrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0);
   }, [carrito]);
+
+  const calcularTotal = useMemo(() => {
+    // Si tienes algún costo adicional, puedes agregarlo aquí, por ejemplo:
+    const impuestos = calcularSubtotal * 0.05; // Ejemplo de 19% de impuestos
+    return calcularSubtotal + impuestos;
+  }, [calcularSubtotal]); // Se vuelve a calcular cuando el subtotal cambia
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -175,11 +184,12 @@ const Carrito = () => {
           >
             <div className="w-full md:w-1/3 bg-white grid place-items-center">
               <img
-                src={producto.imagen }
+                src={producto.imagen}
                 alt={producto.nombre}
-                className="rounded-xl"
+                className="rounded-xl w-full h-full object-cover"
               />
             </div>
+
   
             <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
               <div className="flex justify-between items-center">
