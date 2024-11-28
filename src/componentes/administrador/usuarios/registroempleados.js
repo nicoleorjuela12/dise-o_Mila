@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../../../config/config'; 
 
 
 const FormularioRegiEmp = () => {
@@ -77,7 +78,7 @@ const FormularioRegiEmp = () => {
 
     try {
       // Check if the user is already registered
-      const response = await axios.post('http://localhost:8000/usuarios/verificar-empleado/', {
+      const response = await axios.post(`${API_URL}/usuarios/verificar-empleado/`, {
         numero_documento: formData.numero_documento,
         correo: formData.correo,
       });
@@ -92,7 +93,7 @@ const FormularioRegiEmp = () => {
       
       else {
         // Register new user without confirmcorreo
-          await axios.post('http://localhost:8000/usuarios/registrar-empleado', dataToSend);
+          await axios.post(`${API_URL}/usuarios/registrar-empleado`, dataToSend);
           Swal.fire({
             icon: 'success',
             title: 'Registro Exitoso',

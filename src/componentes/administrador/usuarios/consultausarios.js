@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faFilter, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faUserShield, faClipboard, faClock } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config'; 
+
 
 const ConsultaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -26,7 +28,7 @@ const ConsultaUsuarios = () => {
 
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/usuarios/consultarempleados');
+      const response = await axios.get(`${API_URL}/usuarios/consultarempleados`);
       const usuariosFiltrados = response.data.filter(usuario =>
         (usuario.rol === 'administrador' || usuario.rol === 'mesero') && usuario.estado === 'Activo'
       );
@@ -52,7 +54,7 @@ const ConsultaUsuarios = () => {
       });
 
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:8000/usuarios/empleados/${id_usuario}`);
+        await axios.delete(`${API_URL}/usuarios/empleados/${id_usuario}`);
         fetchUsuarios();
         Swal.fire('Eliminado!', 'El usuario ha sido eliminado.', 'success');
       }
@@ -77,7 +79,7 @@ const ConsultaUsuarios = () => {
       if (usuarioEdit) {
   
         // Envia el usuario completo
-        await axios.put(`http://localhost:8000/usuarios/empleados/${usuarioEdit.id_usuario}`, {
+        await axios.put(`${API_URL}/usuarios/empleados/${usuarioEdit.id_usuario}`, {
           rol: usuarioEdit.rol,
           titulo: usuarioEdit.titulo,
           turno: usuarioEdit.turno,
