@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import API_URL from '../../../config/config'; 
+
 
 const ReservaLocal = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +32,7 @@ const ReservaLocal = () => {
         return;
       }
       try {
-        const response = await axios.get(`http://localhost:8000/usuarios/${id_usuario}`);
+        const response = await axios.get(`${API_URL}/usuarios/${id_usuario}`);
         const user = response.data;
 
         setFormData((prevFormData) => ({
@@ -132,7 +134,7 @@ const ReservaLocal = () => {
 
   const checkAvailability = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/usuarios/reservalocal');
+      const response = await axios.get(`${API_URL}/usuarios/reservalocal`);
       const reservas = response.data;
   
       const horaInicioSolicitud = new Date(formData.fecha + 'T' + formData.horainicio);
@@ -181,7 +183,7 @@ const ReservaLocal = () => {
     console.log("Datos a enviar:", reservaData); // Agrega esta línea para depuración
 
     try {
-      const response = await axios.post('http://localhost:8000/usuarios/reservalocal', reservaData);
+      const response = await axios.post(`${API_URL}/usuarios/reservalocal`, reservaData);
       console.log("Respuesta del servidor:", response.data); // Agrega esta línea para ver la respuesta
 
       Swal.fire('¡Éxito!', 'La reserva ha sido registrada correctamente', 'success');

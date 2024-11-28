@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import API_URL from '../../../config/config'; 
 
 
 const ReservaMesa = () => {
@@ -33,7 +34,7 @@ useEffect(() => {
             if (!id_usuario) {
                 throw new Error('ID de usuario no encontrado');
             }
-            const response = await axios.get(`http://localhost:8000/usuarios/${id_usuario}`);
+            const response = await axios.get(`${API_URL}/usuarios/${id_usuario}`);
             const user = response.data;
 
             setFormData((prevFormData) => ({
@@ -55,7 +56,7 @@ useEffect(() => {
 
 const checkAvailability = async () => {
     try {
-    const response = await axios.get('http://localhost:8000/usuarios/reservas');
+    const response = await axios.get(`${API_URL}/usuarios/reservas`);
     const reservas = response.data;
 
     const fechaSolicitud = new Date(formData.fecha);
@@ -143,7 +144,7 @@ const handleSubmit = async (e) => {
     console.log("Datos a enviar:", reservaData); // Agrega esta línea para depuración
 
     try {
-      const response = await axios.post('http://localhost:8000/usuarios/reservas', reservaData);
+      const response = await axios.post(`${API_URL}/usuarios/reservas`, reservaData);
       console.log("Respuesta del servidor:", response.data); // Agrega esta línea para ver la respuesta
 
       Swal.fire('¡Éxito!', 'La reserva ha sido registrada correctamente', 'success');

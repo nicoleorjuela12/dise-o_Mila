@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
+import API_URL from '../../../config/config'; 
+
 
 const MisReservas = () => {
     const [reservas, setReservas] = useState([]);
@@ -28,11 +30,11 @@ const MisReservas = () => {
 
             if (!isNaN(id_usuario)) {
                 try {
-                    const responseReservas = await Axios.get('http://localhost:8000/usuarios/reservas');
+                    const responseReservas = await Axios.get(`${API_URL}/usuarios/reservas`);
                     const misReservas = responseReservas.data.filter(reserva => reserva.id_usuario === id_usuario);
-                    const responseReservaLocal = await Axios.get('http://localhost:8000/usuarios/reservalocal');
+                    const responseReservaLocal = await Axios.get(`${API_URL}/usuarios/reservalocal`);
                     const misReservasLocal = responseReservaLocal.data.filter(reserva => reserva.id_usuario === id_usuario);
-                    const responseUsuario = await Axios.get(`http://localhost:8000/usuarios/${id_usuario}`);
+                    const responseUsuario = await Axios.get(`${API_URL}/usuarios/reservas/${id_usuario}`);
                     setUserData(responseUsuario.data);
 
                     const todasReservas = [...misReservas, ...misReservasLocal];
