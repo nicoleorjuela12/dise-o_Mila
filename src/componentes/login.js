@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCard, faLock, faEye, faEyeSlash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import API_URL from '../config'; 
+import API_URL from '../config/config'; 
 
 const Login = () => {
     const [formData, setFormData] = useState({
