@@ -115,8 +115,10 @@ const BarraCliente = () => {
               </button>
               {showReservasMenu && (
                 <div id="reservas-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  <Link to="/InicioReservas"className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Reserva local</Link>
+                  <Link to="/reservalocal"className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Reserva local</Link>
                   <Link to="/ReservaMesa"className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Reserva mesa</Link>
+                  <Link to="/ReservasCliente"className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Consultar Reservas</Link>
+
                 </div>
               )}
             </div>

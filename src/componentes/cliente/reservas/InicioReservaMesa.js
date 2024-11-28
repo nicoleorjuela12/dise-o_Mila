@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import API_URL from '../../../config/config'; 
+import API_URL from '../../../config/config';
 
 
 
 const ReservaMesa = () => {
+    const navigate = useNavigate();
 const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -145,34 +147,37 @@ const handleSubmit = async (e) => {
     console.log("Datos a enviar:", reservaData); // Agrega esta línea para depuración
 
     try {
-      const response = await axios.post(`${API_URL}/usuarios/reservas`, reservaData);
-      console.log("Respuesta del servidor:", response.data); // Agrega esta línea para ver la respuesta
-
-      Swal.fire('¡Éxito!', 'La reserva ha sido registrada correctamente', 'success');
-
-      setFormData({
-        nombre: '',
-        telefono: '',
-        correo: '',
-        numero_documento: '',
-        numero_personas: '',
-        fecha: '',
-        horainicio: '',
-        horafin: '',
-        decoracion: '',
-        actividades: '',
-        tipo_servicios: false,
-        comentarios: '',
-        estado_reserva: 'Pendiente',
-        tipo_reserva: 'reserva_mesa',
-        terminos: false,
-        id_usuario:'',
-      });
-
-    } catch (error) {
+        const response = await axios.post(`${API_URL}/usuarios/reservas`, formData);
+        console.log("Respuesta del servidor:", response.data);
+  
+        Swal.fire('¡Éxito!', 'La reserva ha sido registrada correctamente', 'success');
+  
+        // Limpia el formulario
+        setFormData({
+          nombre: '',
+          telefono: '',
+          correo: '',
+          numero_documento: '',
+          numero_personas: '',
+          fecha: '',
+          horainicio: '',
+          horafin: '',
+          decoracion: '',
+          actividades: '',
+          tipo_servicios: false,
+          comentarios: '',
+          estado_reserva: 'Pendiente',
+          tipo_reserva: 'reserva_mesa',
+          terminos: false,
+          id_usuario: '',
+        });
+  
+        // Redirige al usuario a la página de consultar reservas cliente
+        navigate('/ReservasCliente');
+      } catch (error) {
         console.error('Hubo un error al registrar la reserva', error);
         if (error.response) {
-            console.error("Error del servidor:", error.response.data); // Detalles del error del servidor
+          console.error("Error del servidor:", error.response.data);
         }
         Swal.fire('Error', 'Hubo un problema al registrar la reserva', 'error');
       }
