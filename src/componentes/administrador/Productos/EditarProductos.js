@@ -51,14 +51,16 @@ const EditarProductos = () => {
     return regex.test(url); // Valida la URL
   };
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Formatea el precio al cambiar
+  
+    // Formatea el precio solo si el campo de precio ha sido modificado
     if (name === "precio") {
-      const formattedValue = formatPrice(value);
-      setFormData((prevState) => ({ ...prevState, [name]: formattedValue }));
+      // Solo formatea si el valor ha cambiado, de lo contrario mantiene el formato original
+      if (value !== formData.precio) {
+        const formattedValue = formatPrice(value);
+        setFormData((prevState) => ({ ...prevState, [name]: formattedValue }));
+      }
     } else {
       setFormData((prevState) => ({ ...prevState, [name]: value }));
     }
@@ -88,18 +90,18 @@ const EditarProductos = () => {
       return;
     }
   
-    // Convertir el precio a un número sin puntos antes de enviar
-        let numericPrice = parseInt(formData.precio.replace(/\./g, ""), 10);
+   // Convertir el precio a un número sin puntos antes de enviar
+    let numericPrice = parseInt(formData.precio.replace(/\./g, ""), 10);
     if (isNaN(numericPrice) || numericPrice < 7000 || numericPrice > 200000) {
       Swal.fire("Error", "El precio debe estar entre 7,000 y 200,000", "error");
       return;
     }
-
   
     try {
       const dataToSend = {
         ...formData,
-        precio: numericPrice, // Enviando el precio como número sin puntos
+        precio: numericPrice,       
+      
       };
       // Actualizando el producto
       const response = await axios.put(`${API_URL}/usuarios/productos/${id_producto}`, dataToSend);
