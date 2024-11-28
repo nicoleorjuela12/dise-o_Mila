@@ -2,7 +2,6 @@ import React, { useState } from 'react'; // Importa useState
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import API_URL from '../../config/config';  // Si está un nivel arriba
 
 
 const FormularioRegistro = () => {
@@ -26,7 +25,7 @@ const FormularioRegistro = () => {
       aceptaTerminos : false 
   });
 
-  
+  const API_URL = 'https://procesos-mila.onrender.com';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -160,7 +159,7 @@ const subir = async (e) => {
 
     // Si no existe, procede a registrar al usuario
     try {
-          await axios.post(`${API_URL}/usuarios`, formData);        
+          await axios.post(`${API_URL}/usuarios/`, formData);        
           await Swal.fire({
             title: "Éxito",
             text: "Usuario registrado exitosamente.",
