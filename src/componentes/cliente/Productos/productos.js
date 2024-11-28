@@ -174,7 +174,7 @@ const ProductosCliente = () => {
             </div>
           </div>
       
-          <div className="px-6 py-3 flex items-center justify-between bg-yellow-100 border-t border-yellow-500 h-94">
+          <div className="px-6 py-3 flex items-center justify-between bg-yellow-100  border-t border-yellow-500 h-92 mb-6">
             <div className="flex items-center">
               <button
                 onClick={disminuirCantidad}
@@ -182,31 +182,26 @@ const ProductosCliente = () => {
               >
                 -
               </button>
-
+              
+              
               <span className="mx-2 text-lg font-semibold">{cantidad}</span>
-              
               <button
-                onClick={aumentarCantidad}
-                className="text-lg px-3 py-1 text-gray-900 border border-yellow-300 rounded hover:bg-yellow-200 transition duration-300"
-              >
-                +
+                  onClick={aumentarCantidad}
+                  className="text-lg px-3 py-1 text-gray-900 border border-yellow-300 rounded hover:bg-yellow-200 transition duration-300"
+                >
+                  +
               </button>
             </div>
-
-            <div className="flex flex-col items-end">
-              
-              <button
-                onClick={agregarAlCarrito}
-                className="flex items-center bg-yellow-500 hover:bg-yellow-300 text-black px-4 py-2 rounded mt-2 transition duration-500 ease-in-out"
-              >
-                <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13h.4m12 0a1 1 0 01-1 1H9m4 6a2 2 0 100-4 2 2 0 000 4zm0 0h4m-4 0H9"></path>
-                </svg>
-                Añadir al carrito
-              </button>
-            </div>
+            <button
+              onClick={agregarAlCarrito}
+              className="flex items-center bg-yellow-500 hover:bg-yellow-300 text-black px-4 py-2 rounded transition duration-500 ease-in-out"
+            >
+              <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13h.4m12 0a1 1 0 01-1 1H9m4 6a2 2 0 100-4 2 2 0 000 4zm0 0h4m-4 0H9"></path>
+              </svg>
+              Añadir al carrito
+            </button>
           </div>
-
         </div>
     
       {/* Modal */}
