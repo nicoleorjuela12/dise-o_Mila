@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBox, faUsers, faCalendar, faShoppingBasket, faCalendarCheck, faConciergeBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import API_URL from '../../config/config';
 
 const DropdownMenu = ({ title, icon, links, onMenuClose }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -59,7 +60,7 @@ const BarraAdmin = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/usuarios/cerrarsesion', {}, { withCredentials: true });
+      const response = await axios.post(`${API_URL}/usuarios/cerrarsesion`, {}, { withCredentials: true });
       if (response.status === 200) {
         localStorage.clear();
         Swal.fire({
