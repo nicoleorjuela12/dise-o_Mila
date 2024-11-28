@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCard, faLock, faEye, faEyeSlash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { API_URL } from '../../config';
+
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/usuarios/login', {
+            const response = await axios.post(`${API_URL}/usuarios/usuarios/login`, {
                 numero_documento,
                 contrasena
             }, {
