@@ -78,7 +78,7 @@ const FormularioRegiEmp = () => {
 
     try {
       // Check if the user is already registered
-      const response = await axios.post(`${API_URL}/usuarios/verificar-empleado/`, {
+      const response = await axios.post(`${API_URL}/usuarios/verificar-empleado`, {
         numero_documento: formData.numero_documento,
         correo: formData.correo,
       });
@@ -116,8 +116,6 @@ const FormularioRegiEmp = () => {
   return (
     <div>
 
-
-      <link rel="stylesheet" type="text/css" href="../estilos/estilos_barra.css" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       <style dangerouslySetInnerHTML={{ __html: `
         .espacio_imagen1 {
