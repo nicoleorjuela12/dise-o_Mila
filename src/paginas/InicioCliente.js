@@ -3,7 +3,6 @@ import '../index.css';
 import BarraNormal from "../componentes/barras/Barra_Normal";
 import CardSlider from "../cards/cards";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Footer from "../Footer/footer";
 
 
 const Index = () => {
