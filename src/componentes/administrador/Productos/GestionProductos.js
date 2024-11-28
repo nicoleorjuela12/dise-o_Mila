@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import API_URL from '../../../config/config'; 
+
 
 const GestionProductos = () => {
   const [productos, setProductos] = useState([]);
@@ -16,7 +18,7 @@ const GestionProductos = () => {
   const productosPorPagina = 6;
 
   useEffect(() => {
-    axios.post('http://localhost:8000/usuarios/consultar-producto')
+    axios.post(`${API_URL}/usuarios/consultar-producto`)
       .then(response => {
         const productosConImagenes = response.data.map(producto => {
           if (producto.imagen) {
@@ -68,7 +70,7 @@ const GestionProductos = () => {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`http://localhost:8000/usuarios/productos/${id_producto}`)
+            axios.delete(`${API_URL}/usuarios/productos/${id_producto}`)
                 .then(() => {
                     // Filtrar los productos para eliminar el que se ha eliminado
                     setProductos(productos.filter(producto => producto.id_producto !== id_producto));

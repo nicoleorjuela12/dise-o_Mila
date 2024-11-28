@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox, faDollarSign, faList, faCamera, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
+import API_URL from '../../../config/config'; 
 
 
 const RegistroProductos = () => {
@@ -44,7 +45,7 @@ const RegistroProductos = () => {
 
   const checkProductExists = async (nombre) => {
     try {
-      const response = await axios.post("http://localhost:8000/usuarios/verificar-producto", { nombre });
+      const response = await axios.post(`${API_URL}/usuarios/verificar-producto`, { nombre });
       return response.data.existe; // Retornamos si el producto ya existe
     } catch (error) {
       Swal.fire("Error", "Error en la conexión con el servidor", "error");
@@ -106,7 +107,7 @@ const RegistroProductos = () => {
       };
   
       // Registrando el producto
-      const response = await axios.post("http://localhost:8000/usuarios/registrar-producto", dataToSend);
+      const response = await axios.post(`${API_URL}/usuarios/registrar-producto`, dataToSend);
   
       if (response.status === 200) {
         Swal.fire("Éxito", "Producto registrado exitosamente", "success");

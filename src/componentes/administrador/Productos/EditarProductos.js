@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox, faDollarSign, faList, faCamera, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
+import API_URL from '../../../config/config'; 
+
 
 const EditarProductos = () => {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const EditarProductos = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/usuarios/productos/${id_producto}`);
+        const response = await axios.get(`${API_URL}/usuarios/productos/${id_producto}`);
         if (response.status === 200) {
           setFormData(response.data); // Establece los datos del producto en el estado
         }
@@ -100,7 +102,7 @@ const EditarProductos = () => {
         precio: numericPrice, // Enviando el precio como número sin puntos
       };
       // Actualizando el producto
-      const response = await axios.put(`http://localhost:8000/usuarios/productos/${id_producto}`, dataToSend);
+      const response = await axios.put(`${API_URL}/usuarios/productos/${id_producto}`, dataToSend);
   
       if (response.status === 200) {
         Swal.fire("Éxito", "Producto actualizado exitosamente", "success").then(() => {
