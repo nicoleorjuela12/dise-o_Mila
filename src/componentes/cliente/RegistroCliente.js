@@ -146,7 +146,7 @@ const FormularioRegistro = () => {
 
 const verificarUsuarioExistente = async () => {
     try {
-        const response = await axios.post(`${API_URL}/usuarios/verificar-usuario`, {
+        const response = await axios.post('https://procesos-mila.onrender.com/usuarios/verificar-usuario', {
             numero_documento: formData.numero_documento,
             correo: formData.correo,
         });
@@ -237,7 +237,7 @@ const subir = async (e) => {
 
     // Si no existe, procede a registrar al usuario
     try {
-        await axios.post(`${API_URL}/usuarios/`, formData);
+        await axios.post('https://procesos-mila.onrender.com/usuarios/', formData);
         await Swal.fire({
             title: "Éxito",
             text: "Usuario registrado exitosamente.",
