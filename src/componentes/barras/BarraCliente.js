@@ -6,17 +6,17 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import API_URL from '../../config/config'; 
 
- 
- 
+
+
 const BarraCliente = () => {
   const [showReservasMenu, setShowReservasMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showEventosMenu, setShowEventosMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileReservasMenu, setShowMobileReservasMenu] = useState(false);
- 
+
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest('#reservas-button') && !e.target.closest('#reservas-menu')) {
@@ -34,16 +34,16 @@ const BarraCliente = () => {
       if (!e.target.closest('#eventos-button') && !e.target.closest('#eventos-menu')) {
         setShowEventosMenu(false);
       }
- 
+
     };
- 
+
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
- 
- 
- 
- 
+
+  
+
+
   const handleLogout = async () => {
     try {
       const response = await axios.post(`${API_URL}/usuarios/cerrarsesion`, {}, { withCredentials: true });
@@ -51,9 +51,9 @@ const BarraCliente = () => {
             // Eliminar el rol del usuario del almacenamiento local
             localStorage.removeItem('rol');
             localStorage.removeItem('id_usuario');
-            localStorage.clear();
- 
- 
+            localStorage.clear(); 
+
+
             // Mostrar mensaje de éxito
             Swal.fire({
                 title: 'Sesión cerrada',
@@ -75,7 +75,7 @@ const BarraCliente = () => {
         });
     }
 };
- 
+  
   return (
     <div className="flex flex-col items-center justify-center mb-24">
       <div className="flex flex-col">
@@ -86,7 +86,7 @@ const BarraCliente = () => {
               <img className="h-20 object-cover" src="https://i.ibb.co/gj0Bpcc/logo-empresa-mila.png" alt="logo-empresa-mila" />
             </Link>
           </div>
- 
+
           <button
             id="mobile-menu-button"
             type="button"
@@ -98,12 +98,12 @@ const BarraCliente = () => {
               <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path>
             </svg>
           </button>
- 
+
           <div id="desktop-menu" className="hidden lg:flex flex-col lg:flex-row lg:items-center lg:space-x-12 space-y-2 lg:space-y-0">
             <Link to="/DashboardCliente" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faHome} className="mr-2" /> Inicio
             </Link>
- 
+
             <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faBox} className="mr-2" /> Productos
             </Link>
@@ -121,8 +121,8 @@ const BarraCliente = () => {
                 <Link to="/reservascliente" className='block px-4 py-2'>Consulta tus reservas</Link>
               </div>
             </div>
- 
- 
+
+
             <Link to="/pedidoss" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
               <FontAwesomeIcon icon={faShoppingBasket} className="mr-2" /> Pedidos
             </Link>
@@ -135,7 +135,7 @@ const BarraCliente = () => {
                 <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" /> Eventos
               </Link>
               <div id="eventos-menu" className={`dropdown-menu mt-2 rounded-lg shadow-lg bg-white ${showEventosMenu ? 'show' : ''}`}>
-                <Link to="/EventosCliente" className="block px-4 py-2">Eventos</Link>
+                <Link to="/RegistroEventosCliente" className="block px-4 py-2">Eventos</Link>
                 <Link to="/MisInscripciones" className="block px-4 py-2">Mis Inscripciones</Link>
               </div>
             </div>
@@ -143,7 +143,7 @@ const BarraCliente = () => {
               <FontAwesomeIcon icon={faConciergeBell} className="mr-2" /> Servicios
             </Link>
           </div>
- 
+
           <div className="flex items-center space-x-6">
             <Link to="/Carrito" className="flex items-center">
               <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="Carrito" className="h-8 w-8" />
@@ -165,7 +165,7 @@ const BarraCliente = () => {
             </div>
           </div>
         </nav>
- 
+
         <div id="mobile-menu" className={`lg:hidden ${showMobileMenu ? 'block' : 'hidden'} fixed top-0 left-0 w-full h-full bg-white shadow-lg z-20`}>
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
             <span className="text-xl font-semibold">Menú</span>
@@ -186,8 +186,8 @@ const BarraCliente = () => {
             <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faBox} className="mr-2" /> Productos
             </Link>
- 
- 
+
+
             <div className="relative">
               <button
                 id="mobile-reservas-button"
@@ -203,7 +203,7 @@ const BarraCliente = () => {
                 </div>
               )}
             </div>
-           
+            
             <Link to="/pedidoss" className="text-gray-900 hover:text-yellow-800" onClick={() => setShowMobileMenu(false)}>
               <FontAwesomeIcon icon={faShoppingBasket} className="mr-2" /> Pedidos
             </Link>
@@ -224,10 +224,10 @@ const BarraCliente = () => {
       </div>
     </div>
   );
- 
- 
+
+  
 };
- 
- 
- 
+
+
+
 export default BarraCliente;

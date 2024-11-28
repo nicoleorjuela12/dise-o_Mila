@@ -29,6 +29,12 @@ import Pedido from './componentes/cliente/Pedidos/verpedido';
 import DashboardMesero from './paginas/dashboard-mesero';
 import BarraMesero from './componentes/barras/Barra_Mesero';
 import GestionPedidos from './componentes/mesero/gestionPedidos';
+import RegistroEventos from './componentes/administrador/eventos/RegistroEventosAdmin';
+import EditarEventos from './componentes/administrador/eventos/EditarEventos';
+import RegistroEventosAdmin from './componentes/administrador/eventos/ModificarEventos';
+import RegistroEventosCliente from './componentes/cliente/eventos/EventosCliente';
+import FormularioInscripcion from './componentes/cliente/eventos/FormularioInscripcion';
+import MisInscripciones from './componentes/cliente/eventos/MisIncripciones';
 
 function App() {
     return (
@@ -98,6 +104,12 @@ const MainContent = () => {
                     <Route path="/pedidoss" element={<PrivateRoute component={Pedido}/>}/>
                     <Route path="/dashboard-mesero" element={<PrivateRoute component={DashboardMesero}/>}/>
                     <Route path="/pedidos-mesero" element={<PrivateRoute component={GestionPedidos}/>}/>
+                    <Route path="/RegistroEventos" element={<PrivateRoute component={RegistroEventos}/>}/>
+                    <Route path="/ModificarEventos" element={<PrivateRoute component={RegistroEventosAdmin}/>}/>
+                    <Route path="/RegistroEventosCliente" element={<PrivateRoute component={RegistroEventosCliente}/>}/>
+                    <Route path="/EditarEventos/:id_evento" element={<PrivateRoute component={EditarEventos}/>}/>
+                    <Route path="/FormularioInscripcion" element={<PrivateRoute component={FormularioInscripcion}/>}/>
+                    <Route path="/MisInscripciones" element={<PrivateRoute component={MisInscripciones}/>}/>
 
 
 
