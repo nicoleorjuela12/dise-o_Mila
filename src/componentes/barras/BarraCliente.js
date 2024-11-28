@@ -12,7 +12,7 @@ const BarraCliente = () => {
   const [showReservasMenu, setShowReservasMenu] = useState(false);
   const [showEventosMenu, setShowEventosMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-    const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileReservasMenu, setShowMobileReservasMenu] = useState(false);
 
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const BarraCliente = () => {
       if (!e.target.closest('#eventos-button') && !e.target.closest('#eventos-menu')) {
         setShowUserMenu(false);
       }
-      if (!e.target.closest("#user-menu-button") && !e.target.closest("#user-menu")) {
+      if (!e.target.closest('#user-menu-button') && !e.target.closest('#user-menu')) {
         setShowUserMenu(false);
       }
 
@@ -149,22 +149,25 @@ const BarraCliente = () => {
             </Link>
           </div>
 
-          <div className="relative">
-            <button
-              id="user-menu-button"
-              className="text-gray-900 hover:text-yellow-800"
-              onClick={() => setShowUserMenu(!showUserMenu)}
-            >
-              <FontAwesomeIcon icon={faUser} className="text-gray-900 h-8 w-8" />
-            </button>
-            {showUserMenu && (
-              <div id="user-menu" className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2">
-                <Link to="/perfilusuario" className="block px-4 py-2 text-gray-700 hover:bg-yellow-100">Perfil</Link>
-                <button onClick={handleLogout} className="block w-full px-4 py-2 text-red-700 hover:bg-yellow-200 text-left">
-                  Cerrar sesión
-                </button>
-              </div>
-            )}
+          <div className="flex items-center space-x-6">
+            <Link to="/Carrito" className="flex items-center">
+              <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="Carrito" className="h-8 w-8" />
+            </Link>
+            <div className="relative">
+              <button
+                id="user-menu-button"
+                className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline"
+                onClick={() => setShowUserMenu(!showUserMenu)}
+              >
+                <FontAwesomeIcon icon={faUser} className="text-gray-900 h-8 w-8" />
+              </button>
+              {showUserMenu && (
+                <div id="user-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <Link to="/perfilusuario" className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Perfil</Link>
+                  <button onClick={handleLogout} className="block w-full px-4 py-2 text-red-700 hover:bg-yellow-200 text-left">Cerrar sesión</button>
+                </div>
+              )}
+            </div>
           </div>
         </nav>
 
