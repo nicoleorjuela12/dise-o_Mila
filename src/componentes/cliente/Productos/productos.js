@@ -174,7 +174,7 @@ const ProductosCliente = () => {
             </div>
           </div>
       
-          <div className="px-6 py-3 flex items-center justify-between bg-yellow-100  border-t border-yellow-500 h-96">
+          <div className="px-6 py-3 flex items-center justify-between bg-yellow-100  border-t border-yellow-500 h-94">
             <div className="flex items-center">
               <button
                 onClick={disminuirCantidad}
