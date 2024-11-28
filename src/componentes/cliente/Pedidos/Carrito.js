@@ -5,6 +5,7 @@ import { faTrashAlt, faUser, faIdCard, faMapMarkerAlt } from '@fortawesome/free-
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config';
 
 const Carrito = () => {
   const [carrito, setCarrito] = useState([]);
@@ -48,7 +49,7 @@ const Carrito = () => {
     if (id_usuario) {
       const fetchUserData = async () => {
         try {
-          const response = await axios.get(`http://localhost:8000/usuarios/${id_usuario}`);
+          const response = await axios.get(`${API_URL}/usuarios/${id_usuario}`);
           const userData = response.data;
 
           setFormData((prevFormData) => ({

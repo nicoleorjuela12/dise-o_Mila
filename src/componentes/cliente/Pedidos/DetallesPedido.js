@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faCreditCard, faClipboardList, faUser, faComment, faCalendar, faTruck } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config';
+
 
 const DetallesPedido = () => {
   const { state } = useLocation();
@@ -84,7 +86,7 @@ const DetallesPedido = () => {
   
     // Si todas las validaciones pasan, se envía el pedido
     try {
-      const response = await fetch('http://localhost:8000/usuarios/pedido', {
+      const response = await fetch(`${API_URL}/usuarios/pedido`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

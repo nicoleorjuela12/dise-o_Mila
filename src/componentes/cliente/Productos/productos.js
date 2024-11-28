@@ -5,6 +5,9 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../context/UserContext';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config'; 
+
+
 const ProductosCliente = () => {
   const navigate = useNavigate();
 
@@ -21,7 +24,7 @@ const ProductosCliente = () => {
 
   const [showFilters, setShowFilters] = useState(false);
   useEffect(() => {
-    axios.post('http://localhost:8000/usuarios/consultar-producto')
+    axios.post(`${API_URL}/usuarios/consultar-producto`)
       .then(respuesta => {
         setProductos(respuesta.data);
         setProductosNoEncontrados(false);

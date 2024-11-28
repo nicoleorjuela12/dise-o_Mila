@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { faUser, faIdCard, faEnvelope, faMapMarkerAlt, faBox, faTag, faImage } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config';
 
 const Pedidos = () => {
     const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ const Pedidos = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/usuarios/pedido/${id_usuario}`);
+                const response = await axios.get(`${API_URL}/usuarios/pedido/${id_usuario}`);
                 const pedidosFiltrados = response.data.filter(pedido => pedido.id_usuario === parseInt(id_usuario));
                 const pedidosPorEstado = pedidosFiltrados
                     .filter(pedido => activeTab === 'pendiente' ? pedido.estado_pedido === 'Pendiente' : pedido.estado_pedido === 'Entregado')
