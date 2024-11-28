@@ -119,8 +119,8 @@ const BarraCliente = () => {
               </button>
               {showReservasMenu && (
                 <div id="reservas-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  <Link to="/InicioReservas"className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Reserva local</Link>
-                  <Link to="/ReservaMesa"className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Reserva mesa</Link>
+                  <Link to="/InicioReservas"className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Reserva local</Link>
+                  <Link to="/ReservaMesa"className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Reserva mesa</Link>
                 </div>
               )}
             </div>
@@ -139,8 +139,8 @@ const BarraCliente = () => {
               </button>
               {showEventosMenu && (
                 <div id="eventos-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  <Link to="/RegistroEventosCliente" className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Eventos</Link>
-                  <Link to="/MisInscripciones" className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Mis Inscripciones</Link>
+                  <Link to="/RegistroEventosCliente" className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Eventos</Link>
+                  <Link to="/MisInscripciones" className="block px-4 py-2 text-gray-700 hover:bg-yellow-100 no-underline">Mis Inscripciones</Link>
                 </div>
               )}
             </div>
@@ -149,25 +149,22 @@ const BarraCliente = () => {
             </Link>
           </div>
 
-          <div className="flex items-center space-x-6">
-            <Link to="/Carrito" className="flex items-center">
-              <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="Carrito" className="h-8 w-8" />
-            </Link>
-            <div className="relative">
-              <button
-                id="user-menu-button"
-                className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline"
-                onClick={() => setShowUserMenu(!showUserMenu)}
-              >
-                <FontAwesomeIcon icon={faUser} className="text-gray-900 h-8 w-8" />
-              </button>
-              {showUserMenu && (
-                <div id="user-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  <Link to="/perfilusuario" className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Perfil</Link>
-                  <button onClick={handleLogout} className="block w-full px-4 py-2 text-red-700 hover:bg-yellow-200 text-left">Cerrar sesión</button>
-                </div>
-              )}
-            </div>
+          <div className="relative">
+            <button
+              id="user-menu-button"
+              className="text-gray-900 hover:text-yellow-800"
+              onClick={() => setShowUserMenu(!showUserMenu)}
+            >
+              <FontAwesomeIcon icon={faUser} className="text-gray-900 h-8 w-8" />
+            </button>
+            {showUserMenu && (
+              <div id="user-menu" className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2">
+                <Link to="/perfilusuario" className="block px-4 py-2 text-gray-700 hover:bg-yellow-100">Perfil</Link>
+                <button onClick={handleLogout} className="block w-full px-4 py-2 text-red-700 hover:bg-yellow-200 text-left">
+                  Cerrar sesión
+                </button>
+              </div>
+            )}
           </div>
         </nav>
 
