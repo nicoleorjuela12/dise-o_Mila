@@ -12,7 +12,7 @@ const BarraCliente = () => {
   const [showReservasMenu, setShowReservasMenu] = useState(false);
   const [showEventosMenu, setShowEventosMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileReservasMenu, setShowMobileReservasMenu] = useState(false);
 
   const navigate = useNavigate();
@@ -30,6 +30,9 @@ const BarraCliente = () => {
         setShowMobileReservasMenu(false);
       }
       if (!e.target.closest('#eventos-button') && !e.target.closest('#eventos-menu')) {
+        setShowUserMenu(false);
+      }
+      if (!e.target.closest("#user-menu-button") && !e.target.closest("#user-menu")) {
         setShowUserMenu(false);
       }
 
@@ -115,9 +118,9 @@ const BarraCliente = () => {
                 <FontAwesomeIcon icon={faCalendar} className="mr-2" /> Reservas
               </button>
               {showReservasMenu && (
-                <div id="reservas-menu" className="absolute mt-2 bg-white shadow-lg rounded-lg py-2">
-                  <Link to="/InicioReservas" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Reserva local</Link>
-                  <Link to="/ReservaMesa" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Reserva mesa</Link>
+                <div id="reservas-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <Link to="/InicioReservas"className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Reserva local</Link>
+                  <Link to="/ReservaMesa"className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Reserva mesa</Link>
                 </div>
               )}
             </div>
@@ -135,9 +138,9 @@ const BarraCliente = () => {
                 <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" /> Eventos
               </button>
               {showEventosMenu && (
-                <div id="eventos-menu" className="absolute mt-2 bg-white shadow-lg rounded-lg py-2">
-                  <Link to="/RegistroEventosCliente" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Eventos</Link>
-                  <Link to="/MisInscripciones" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Mis Inscripciones</Link>
+                <div id="eventos-menu" className="absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <Link to="/RegistroEventosCliente" className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Eventos</Link>
+                  <Link to="/MisInscripciones" className="block px-4 py-2 text-gray-700 hover:bg-yellow-200 no-underline">Mis Inscripciones</Link>
                 </div>
               )}
             </div>
