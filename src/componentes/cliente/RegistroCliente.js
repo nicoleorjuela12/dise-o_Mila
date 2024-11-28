@@ -160,8 +160,8 @@ const subir = async (e) => {
 
     // Si no existe, procede a registrar al usuario
     try {
-        await axios.post(`${API_URL}/usuarios/`, formData);
-        await Swal.fire({
+          await axios.post(`${API_URL}/usuarios/`, formData);        
+          await Swal.fire({
             title: "Éxito",
             text: "Usuario registrado exitosamente.",
             icon: "success",
@@ -208,7 +208,6 @@ const subir = async (e) => {
       <title>Pagina de Registro -- Mila GastroFusion</title>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
       <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
-      <link rel="stylesheet" type="text/css" href="https://gastrofusion-milaa.onrender.com/estilos/estilos_barra.css" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
       <style>
         {`
