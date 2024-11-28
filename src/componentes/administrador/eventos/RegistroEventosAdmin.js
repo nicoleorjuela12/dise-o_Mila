@@ -4,6 +4,8 @@ import { faCalendar, faList, faClock, faMapMarkerAlt, faUsers, faDollarSign} fro
 import BarraAdmin from "../../barras/BarraAdministrador";
 import Swal from "sweetalert2";
 import API_URL from "../../../config/config";
+import axios from 'axios';
+
 
 function RegistroEventos() {
   const [formData, setFormData] = useState({
@@ -78,36 +80,37 @@ function RegistroEventos() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/usuarios/evento`, {
-        method: "POST",
+      const response = await axios.post(`${API_URL}/usuarios/evento`, formData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        Swal.fire("Éxito", "Evento registrado exitosamente", "success");
-        setFormData({
-          nombre: "",
-          descripcion: "",
-          categoria: "",
-          horainicio: "",
-          horafin: "",
-          fechaEvento: "",
-          ubicacion: "",
-          capacidad: "",
-          precio_por_persona: "",
-          imagenevento: "",
-          fecha_limite_incsripcion: "",
-          estado: "Pendiente",
-        });
-      } else {
-        Swal.fire("Error", "Ocurrió un error al registrar el evento", "error");
-      }
+    
+      // Si la solicitud es exitosa
+      Swal.fire("Éxito", "Evento registrado exitosamente", "success");
+      setFormData({
+        nombre: "",
+        descripcion: "",
+        categoria: "",
+        horainicio: "",
+        horafin: "",
+        fechaEvento: "",
+        ubicacion: "",
+        capacidad: "",
+        precio_por_persona: "",
+        imagenevento: "",
+        fecha_limite_inscripcion: "",
+        estado: "Pendiente",
+      });
     } catch (error) {
-      Swal.fire("Error", "Error en la conexión con el servidor", "error");
+      // Si ocurre un error en la solicitud
+      Swal.fire(
+        "Error",
+        error.response?.data?.message || "Error en la conexión con el servidor",
+        "error"
+      );
     }
+    
   };
 
   return (
