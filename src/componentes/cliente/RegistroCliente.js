@@ -160,7 +160,7 @@ const subir = async (e) => {
 
     // Si no existe, procede a registrar al usuario
     try {
-          await axios.post(`${API_URL}/usuarios/`, formData);        
+          await axios.post(`${API_URL}/usuarios`, formData);        
           await Swal.fire({
             title: "Éxito",
             text: "Usuario registrado exitosamente.",
