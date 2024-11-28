@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faBox, faCalendar, faShoppingBasket, faConciergeBell, faUser, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBox, faCalendar, faShoppingBasket, faConciergeBell, faUser, faStar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import '../../styles/estilos_barra.css'; // Asegúrate de que la ruta sea correcta
 
@@ -9,6 +9,17 @@ const BarraNormal = () => {
 
     const handleMobileMenuToggle = () => {
         setMobileMenuOpen(!mobileMenuOpen);
+    };
+
+    // Función para el desplazamiento suave
+    const smoothScroll = (event) => {
+        event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+        const targetId = event.currentTarget.getAttribute("href");
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
@@ -45,15 +56,18 @@ const BarraNormal = () => {
                     <Link to="/EventosCliente" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
                         <FontAwesomeIcon icon={faCalendar} className="mr-2 text-yellow-500" /> Eventos
                     </Link>
-                    <Link to="#serviciosbarra" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                    <a href="#servicios" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
                         <FontAwesomeIcon icon={faConciergeBell} className="mr-2 text-yellow-500" /> Servicios
-                    </Link>
-                    <Link to="#nosotros" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                    </a>
+                    <a href="#nosotrosbarra" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
                         <FontAwesomeIcon icon={faUser} className="mr-2 text-yellow-500" /> Nosotros
-                    </Link>
-                    <Link to="#porquemila" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                    </a>
+                    <a href="#porquemila" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
                         <FontAwesomeIcon icon={faStar} className="mr-2 text-yellow-500" /> Por qué Mila
-                    </Link>
+                    </a>
+                    <a href="#ubicacion" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 text-yellow-500" /> Ubicación
+                    </a>
                 </div>
 
                 <div className="hidden lg:flex items-center space-x-6">
@@ -73,31 +87,30 @@ const BarraNormal = () => {
             </nav>
 
             {/* Mobile Menu */}
-            <div id="mobile-menu" className={`lg:hidden fixed top-24 left-0 right-0 bg-white shadow-lg z-50 ${mobileMenuOpen ? 'block' : 'hidden'}`}>
-                <Link to="/" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faHome} className="mr-2" /> Inicio
-                </Link>
-                <Link to="/productos" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faBox} className="mr-2" /> Productos
-                </Link>
-                <Link to="/EventosCliente" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+            <div id="mobile-menu" className={`lg:hidden fixed top-24 left-0 w-full bg-white rounded-lg shadow-lg p-4 ${mobileMenuOpen ? 'block' : 'hidden'}`}>
+                <div className="flex flex-col space-y-2">
+                    <Link to="/" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faHome} className="mr-2 text-yellow-500" /> Inicio
+                    </Link>
+                    <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faBox} className="mr-2 text-yellow-500" /> Productos
+                    </Link>
+                    <Link to="/EventosCliente" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
                         <FontAwesomeIcon icon={faCalendar} className="mr-2 text-yellow-500" /> Eventos
-                </Link>
-                <Link to="#serviciosbarra" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faConciergeBell} className="mr-2" /> Servicios
-                </Link>
-                <Link to="#nosotros" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faUser} className="mr-2" /> Nosotros
-                </Link>
-                <Link to="#porquemila" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faStar} className="mr-2" /> Por qué Mila
-                </Link>
-                <Link to="/RegistroCliente" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faUser} className="mr-2" /> Regístrate
-                </Link>
-                <Link to="/login" className="block px-4 py-2 text-gray-900 hover:bg-yellow-200 no-underline">
-                    <FontAwesomeIcon icon={faUser} className="mr-2" /> Ingresar
-                </Link>
+                    </Link>
+                    <a href="#servicios" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faConciergeBell} className="mr-2 text-yellow-500" /> Servicios
+                    </a>
+                    <a href="#nosotrosbarra" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faUser} className="mr-2 text-yellow-500" /> Nosotros
+                    </a>
+                    <a href="#porquemila" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faStar} className="mr-2 text-yellow-500" /> Por qué Mila
+                    </a>
+                    <a href="#ubicacion" onClick={smoothScroll} className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
+                        <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 text-yellow-500" /> Ubicación
+                    </a>
+                </div>
             </div>
         </div>
     );

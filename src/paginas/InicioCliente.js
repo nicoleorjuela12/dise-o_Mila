@@ -4,6 +4,7 @@ import '../index.css';
 import BarraNormal from "../componentes/barras/Barra_Normal";
 import Footer from "../Footer/footer";
 
+
 const Index = () => {
 
   const handleClick = () => {
