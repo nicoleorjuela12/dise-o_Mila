@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBox, faCalendar, faShoppingBasket, faCalendarCheck, faConciergeBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import API_URL from '../../config/config'; 
-
 
 
 const BarraCliente = () => {
@@ -20,9 +18,11 @@ const BarraCliente = () => {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest('#reservas-button') && !e.target.closest('#reservas-menu')) {
+        setShowReservasMenu(false);
+      }
+      if (!e.target.closest('#user-menu-button') && !e.target.closest('#user-menu')) {
         setShowUserMenu(false);
       }
-      
       if (!e.target.closest('#mobile-menu-button') && !e.target.closest('#mobile-menu')) {
         setShowMobileMenu(false);
       }
@@ -30,10 +30,7 @@ const BarraCliente = () => {
         setShowMobileReservasMenu(false);
       }
       if (!e.target.closest('#eventos-button') && !e.target.closest('#eventos-menu')) {
-        setShowUserMenu(false);
-      }
-      if (!e.target.closest('#user-menu-button') && !e.target.closest('#user-menu')) {
-        setShowUserMenu(false);
+        setShowEventosMenu(false);
       }
 
     };
@@ -47,7 +44,7 @@ const BarraCliente = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(`${API_URL}/usuarios/cerrarsesion`, {}, { withCredentials: true });
+      const response = await axios.post('http://localhost:8000/usuarios/cerrarsesion', {}, { withCredentials: true });
       if (response.status === 200) {
             // Eliminar el rol del usuario del almacenamiento local
             localStorage.removeItem('rol');
@@ -92,7 +89,7 @@ const BarraCliente = () => {
             id="mobile-menu-button"
             type="button"
             className="inline-flex items-center p-2 ml-1 text-sm text-black-500 rounded-lg lg:hidden hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-200"
-            onClick={() => setShowReservasMenu(!showMobileMenu)}
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
           >
             <span className="sr-only">Open main menu</span>
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +105,6 @@ const BarraCliente = () => {
             <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faBox} className="mr-2" /> Productos
             </Link>
-
             <div className="relative">
               <button
                 id="reservas-button"
