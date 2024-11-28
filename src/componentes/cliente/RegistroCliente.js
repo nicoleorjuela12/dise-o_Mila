@@ -2,7 +2,8 @@ import React, { useState } from 'react'; // Importa useState
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import API_URL from '../../config'; 
+import API_URL from '../../config';  
+
 
 const FormularioRegistro = () => {
 
