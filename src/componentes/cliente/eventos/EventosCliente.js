@@ -6,6 +6,7 @@ import BarraCliente from '../../barras/BarraCliente';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../../../config/config';
 
 const RegistroEventosCliente = () => {
   const [eventos, setEventos] = useState([]);
@@ -22,7 +23,7 @@ const RegistroEventosCliente = () => {
     const id_usuario = localStorage.getItem('id_usuario');
     setIsAuthenticated(!!id_usuario);
 
-    axios.get('http://localhost:8000/usuarios/evento') 
+    axios.get(`${API_URL}/usuarios/evento`) 
       .then(respuesta => {
         setEventos(respuesta.data);
         setEventosNoEncontrados(false); // Reiniciar el estado cuando se cargan eventos
@@ -83,7 +84,7 @@ const RegistroEventosCliente = () => {
       if (evento.capacidad > 0) {
         const nuevaCantidadCupos = evento.capacidad - 1;
 
-        const response = await axios.put(`http://localhost:8000/usuarios/evento/${evento.id_evento}`, {
+        const response = await axios.put(`${API_URL}/usuarios/evento/${evento.id_evento}`, {
           ...evento,
           capacidad: nuevaCantidadCupos,
         });
@@ -166,7 +167,7 @@ const RegistroEventosCliente = () => {
 
             if (nuevosCupos >= 0) {
               axios
-                .patch(`http://localhost:8000/usuarios/evento/${evento.id_evento}`, { capacidad: nuevosCupos.toString() })
+                .patch(`${API_URL}/usuarios/evento/${evento.id_evento}`, { capacidad: nuevosCupos.toString() })
                 .then(() => {
                   console.log('Cupo actualizado correctamente.');
                   // Redirigir al formulario de inscripción después de actualizar los cupos

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../../config/config';
 
 const MisInscripciones = () => {
     const [inscripciones, setInscripciones] = useState([]);
@@ -13,12 +14,12 @@ const MisInscripciones = () => {
         const fetchInscripciones = async () => {
             try {
                 // Obtención de las inscripciones del usuario
-                const response = await axios.get('http://localhost:8000/usuarios/InscripcionEvento');
+                const response = await axios.get(`${API_URL}/usuarios/InscripcionEvento`);
                 const inscripcionesUsuario = response.data.filter(inscripcion => inscripcion.id_usuario === parseInt(id_usuario));
                 
                 // Obtenemos los detalles de cada evento asociado a la inscripción
                 const eventosPromises = inscripcionesUsuario.map(async (inscripcion) => {
-                    const eventoResponse = await axios.get(`http://localhost:8000/usuarios/evento/${inscripcion.id_evento}`);
+                    const eventoResponse = await axios.get(`${API_URL}/usuarios/evento/${inscripcion.id_evento}`);
                     return { ...inscripcion, Evento: eventoResponse.data };
                 });
 

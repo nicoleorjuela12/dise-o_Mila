@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import BarraCliente from '../../barras/BarraCliente';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faIdCard, faPhone, faEnvelope, faCreditCard, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config';
 
 const FormularioInscripcion = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const FormularioInscripcion = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:8000/usuarios/evento/${id_evento}`);
+        const response = await axios.get(`${API_URL}/usuarios/evento/${id_evento}`);
         const eventData = response.data;
 
         if (!eventData || !eventData.precio_por_persona) {
@@ -54,7 +55,7 @@ const FormularioInscripcion = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/usuarios/${id_usuario}`);
+        const response = await axios.get(`${API_URL}/usuarios/${id_usuario}`);
         const userData = response.data;
 
         setFormData((prevFormData) => ({
@@ -94,7 +95,7 @@ const FormularioInscripcion = () => {
 
     try {
       // Enviar los datos de inscripción al backend
-      const response = await axios.post(`http://localhost:8000/usuarios/InscripcionEvento`, {
+      const response = await axios.post(`${API_URL}/usuarios/InscripcionEvento`, {
         id_evento,
         id_usuario,
         nombre: formData.nombre,
