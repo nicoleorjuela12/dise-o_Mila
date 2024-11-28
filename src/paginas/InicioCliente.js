@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import '../index.css';
 import BarraNormal from "../componentes/barras/Barra_Normal";
-import Footer from "../Footer/footer";
 
 
 const Index = () => {
