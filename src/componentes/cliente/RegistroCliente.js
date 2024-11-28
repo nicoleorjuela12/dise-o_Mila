@@ -21,7 +21,7 @@ const FormularioRegistro = () => {
     direccion: '',
     barrio: '',
     estado: 'Activo', // Valor por defecto si no se proporciona
-    aceptaTerminos:1,
+    aceptaTerminos: 0,
     });
 
   // Validación de los requisitos de la contraseña al momento de crearla
@@ -44,11 +44,11 @@ const FormularioRegistro = () => {
   const requisitos = validarContrasena(formData.contrasena);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
+    const { name, value, type, checked } = e.target;    setFormData({
       ...formData,
-      [name]: value,
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value, // Manejo del checkbox
     });
+  
 
     // Validación condicional para el campo número de documento
     if (name === 'tipo_documento') {
@@ -566,23 +566,26 @@ const subir = async (e) => {
 
             
             {/* Checkbox de aceptación de términos */}
-            <div className="flex items-center space-x-2 mt-10-">
+            <div className="flex items-center space-x-2 mt-10">
               <input
-              id="aceptaTerminos"
-              type="checkbox"
-              name="aceptaTerminos"
-              checked={formData.aceptaTerminos}
-              onChange={handleChange}
-              className="form-checkbox h-4 w-4 text-yellow-600"
+                id="aceptaTerminos"
+                type="checkbox"
+                name="aceptaTerminos"
+                checked={!!formData.aceptaTerminos}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  aceptaTerminos: e.target.checked ? 1 : 0, // Convertir a 1 o 0 para el backend
+                })}
+                className="form-checkbox h-4 w-4 text-yellow-600"
               />
               <label htmlFor="aceptaTerminos" className="text-gray-700 text-sm">
-              Acepto los{' '}
-              <button type="button" onClick={() => setMostrarModal(true)} className="text-yellow-500 underline">
-                términos y condiciones
-              </button>
+                Acepto los{' '}
+                <button type="button" onClick={() => setMostrarModal(true)} className="text-yellow-500 underline">
+                  términos y condiciones
+                </button>
               </label>
             </div>
-            
+
             <button
               type="submit"
               disabled={!formData.aceptaTerminos}
