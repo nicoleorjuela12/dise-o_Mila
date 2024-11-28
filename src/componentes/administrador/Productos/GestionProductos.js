@@ -47,8 +47,7 @@ const GestionProductos = () => {
     let productosFiltrados = productos.filter(producto => {
       const porCategoria = filtroCategoria ? producto.categoria === filtroCategoria : true;
       const porNombre = producto.nombre.toLowerCase().includes(filtroNombre.toLowerCase());
-      const esPostre = producto.categoria === 'postres';
-      return porCategoria && porNombre && producto.estado === 'activo' && !esPostre; // Excluir postres
+      return porCategoria && porNombre && producto.estado === 'activo'; // Excluir postres
     });
 
     productosFiltrados.sort((a, b) => {
