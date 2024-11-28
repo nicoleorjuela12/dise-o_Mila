@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBox, faCalendar, faShoppingBasket, faCalendarCheck, faConciergeBell, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -9,12 +9,14 @@ import axios from 'axios';
 const BarraCliente = () => {
   const [showReservasMenu, setShowReservasMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const menuRef = useRef(null);
   const [showEventosMenu, setShowEventosMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileReservasMenu, setShowMobileReservasMenu] = useState(false);
 
   const navigate = useNavigate();
 
+  // Maneja clics fuera de los menús para cerrarlos
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest('#reservas-button') && !e.target.closest('#reservas-menu')) {
@@ -32,47 +34,46 @@ const BarraCliente = () => {
       if (!e.target.closest('#eventos-button') && !e.target.closest('#eventos-menu')) {
         setShowEventosMenu(false);
       }
-
     };
 
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  
-
-
+  // Maneja el cierre de sesión
   const handleLogout = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/usuarios/cerrarsesion', {}, { withCredentials: true });
+      const response = await axios.post(
+        'http://localhost:8000/usuarios/cerrarsesion',
+        {},
+        { withCredentials: true }
+      );
       if (response.status === 200) {
-            // Eliminar el rol del usuario del almacenamiento local
-            localStorage.removeItem('rol');
-            localStorage.removeItem('id_usuario');
-            localStorage.clear(); 
+        // Limpiar almacenamiento local
+        localStorage.removeItem('rol');
+        localStorage.removeItem('id_usuario');
+        localStorage.clear();
 
-
-            // Mostrar mensaje de éxito
-            Swal.fire({
-                title: 'Sesión cerrada',
-                text: 'Has cerrado sesión exitosamente',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                // Redirigir al usuario a la página de inicio de sesión
-                navigate('/login');
-            });
-        }
-    } catch (error) {
-        console.error(error); // Agrega esta línea para ver el error en la consola
+        // Mostrar mensaje de éxito
         Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error al cerrar sesión',
-            icon: 'error',
-            confirmButtonText: 'Reintentar'
+          title: 'Sesión cerrada',
+          text: 'Has cerrado sesión exitosamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then(() => {
+          navigate('/login'); // Redirigir a login
         });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Ocurrió un error al cerrar sesión',
+        icon: 'error',
+        confirmButtonText: 'Reintentar',
+      });
     }
-};
+  };
   
   return (
     <div className="flex flex-col items-center justify-center mb-24">
@@ -105,7 +106,7 @@ const BarraCliente = () => {
             <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faBox} className="mr-2" /> Productos
             </Link>
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               <Link
                 id="reservas-button"
                 className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline"
@@ -113,11 +114,34 @@ const BarraCliente = () => {
               >
                 <FontAwesomeIcon icon={faCalendar} className="mr-2" /> Reservas
               </Link>
-              <div id="reservas-menu" className={`dropdown-menu mt-2 rounded-lg shadow-lg bg-white ${showReservasMenu ? 'show' : ''}`}>
-                <Link to="/reservalocal" className="block px-4 py-2">Reserva local</Link>
-                <Link to="/ReservaMesa" className="block px-4 py-2">Reserva mesa</Link>
-                <Link to="/reservascliente" className='block px-4 py-2'>Consulta tus reservas</Link>
-              </div>
+              {showReservasMenu && (
+                <div
+                  id="reservas-menu"
+                  className="dropdown-menu absolute mt-2 rounded-lg shadow-lg bg-white border"
+                >
+                  <Link
+                    to="/reservalocal"
+                    className="block px-4 py-2 hover:bg-gray-200"
+                    onClick={() => setShowReservasMenu(false)}
+                  >
+                    Reserva local
+                  </Link>
+                  <Link
+                    to="/ReservaMesa"
+                    className="block px-4 py-2 hover:bg-gray-200"
+                    onClick={() => setShowReservasMenu(false)}
+                  >
+                    Reserva mesa
+                  </Link>
+                  <Link
+                    to="/reservascliente"
+                    className="block px-4 py-2 hover:bg-gray-200"
+                    onClick={() => setShowReservasMenu(false)}
+                  >
+                    Consulta tus reservas
+                  </Link>
+                </div>
+              )}
             </div>
 
 
