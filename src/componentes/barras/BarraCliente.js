@@ -10,8 +10,8 @@ import API_URL from '../../config/config';
 
 const BarraCliente = () => {
   const [showReservasMenu, setShowReservasMenu] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const [showEventosMenu, setShowEventosMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileReservasMenu, setShowMobileReservasMenu] = useState(false);
 
@@ -20,11 +20,9 @@ const BarraCliente = () => {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest('#reservas-button') && !e.target.closest('#reservas-menu')) {
-        setShowReservasMenu(false);
-      }
-      if (!e.target.closest('#user-menu-button') && !e.target.closest('#user-menu')) {
         setShowUserMenu(false);
       }
+      
       if (!e.target.closest('#mobile-menu-button') && !e.target.closest('#mobile-menu')) {
         setShowMobileMenu(false);
       }
@@ -32,7 +30,7 @@ const BarraCliente = () => {
         setShowMobileReservasMenu(false);
       }
       if (!e.target.closest('#eventos-button') && !e.target.closest('#eventos-menu')) {
-        setShowEventosMenu(false);
+        setShowUserMenu(false);
       }
 
     };
@@ -91,7 +89,7 @@ const BarraCliente = () => {
             id="mobile-menu-button"
             type="button"
             className="inline-flex items-center p-2 ml-1 text-sm text-black-500 rounded-lg lg:hidden hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-200"
-            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            onClick={() => setShowReservasMenu(!showMobileMenu)}
           >
             <span className="sr-only">Open main menu</span>
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -107,19 +105,21 @@ const BarraCliente = () => {
             <Link to="/productos" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer font-semibold transition-colors duration-300 no-underline">
               <FontAwesomeIcon icon={faBox} className="mr-2" /> Productos
             </Link>
+
             <div className="relative">
-              <Link
+              <button
                 id="reservas-button"
-                className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline"
+                className="text-gray-900 hover:text-yellow-800 font-semibold"
                 onClick={() => setShowReservasMenu(!showReservasMenu)}
               >
                 <FontAwesomeIcon icon={faCalendar} className="mr-2" /> Reservas
-              </Link>
-              <div id="reservas-menu" className={`dropdown-menu mt-2 rounded-lg shadow-lg bg-white ${showReservasMenu ? 'show' : ''}`}>
-                <Link to="/reservalocal" className="block px-4 py-2">Reserva local</Link>
-                <Link to="/ReservaMesa" className="block px-4 py-2">Reserva mesa</Link>
-                <Link to="/reservascliente" className='block px-4 py-2'>Consulta tus reservas</Link>
-              </div>
+              </button>
+              {showReservasMenu && (
+                <div id="reservas-menu" className="absolute mt-2 bg-white shadow-lg rounded-lg py-2">
+                  <Link to="/InicioReservas" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Reserva local</Link>
+                  <Link to="/ReservaMesa" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Reserva mesa</Link>
+                </div>
+              )}
             </div>
 
 
@@ -127,17 +127,19 @@ const BarraCliente = () => {
               <FontAwesomeIcon icon={faShoppingBasket} className="mr-2" /> Pedidos
             </Link>
             <div className="relative">
-              <Link
+              <button
                 id="eventos-button"
-                className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline"
+                className="text-gray-900 hover:text-yellow-800 font-semibold"
                 onClick={() => setShowEventosMenu(!showEventosMenu)}
               >
                 <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" /> Eventos
-              </Link>
-              <div id="eventos-menu" className={`dropdown-menu mt-2 rounded-lg shadow-lg bg-white ${showEventosMenu ? 'show' : ''}`}>
-                <Link to="/RegistroEventosCliente" className="block px-4 py-2">Eventos</Link>
-                <Link to="/MisInscripciones" className="block px-4 py-2">Mis Inscripciones</Link>
-              </div>
+              </button>
+              {showEventosMenu && (
+                <div id="eventos-menu" className="absolute mt-2 bg-white shadow-lg rounded-lg py-2">
+                  <Link to="/RegistroEventosCliente" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Eventos</Link>
+                  <Link to="/MisInscripciones" className="block px-4 py-2 text-gray-900 hover:bg-gray-100">Mis Inscripciones</Link>
+                </div>
+              )}
             </div>
             <Link to="/servicios" className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold no-underline">
               <FontAwesomeIcon icon={faConciergeBell} className="mr-2" /> Servicios
