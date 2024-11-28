@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faList, faClock, faMapMarkerAlt, faUsers, faDollarSign} from "@fortawesome/free-solid-svg-icons";
 import BarraAdmin from "../../barras/BarraAdministrador";
 import Swal from "sweetalert2";
+import API_URL from "../../../config/config";
 
 function RegistroEventos() {
   const [formData, setFormData] = useState({
@@ -77,7 +78,7 @@ function RegistroEventos() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/usuarios/evento", {
+      const response = await fetch(`${API_URL}/usuarios/evento`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

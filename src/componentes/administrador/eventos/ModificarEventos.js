@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import BarraAdmin from '../../barras/BarraAdministrador';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '../../../config/config';
 
 const RegistroEventosAdmin = () => {
   const [eventos, setEventos] = useState([]);
@@ -15,7 +16,7 @@ const RegistroEventosAdmin = () => {
   const [eventosNoEncontrados, setEventosNoEncontrados] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8000/usuarios/evento', {
+    fetch(`${API_URL}/usuarios/evento`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ const RegistroEventosAdmin = () => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:8000/usuarios/evento/${id_evento}`);
+        await axios.delete(`${API_URL}/usuarios/evento/${id_evento}`);
         Swal.fire('Éxito', 'Evento eliminado exitosamente', 'success');
         setEventos(eventos.filter(evento => evento.id_evento !== id_evento));
       } catch (error) {

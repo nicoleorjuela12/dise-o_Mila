@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import BarraAdmin from "../../barras/BarraAdministrador";
 import Swal from "sweetalert2";
 import axios from "axios";
+import API_URL from "../../../config/config";
 
 function EditarEventos() {
   const { id_evento } = useParams(); // Obtener el id_evento correctamente
@@ -35,7 +36,7 @@ function EditarEventos() {
         }
 
         // Solicitud GET utilizando fetch
-        const response = await fetch(`http://localhost:8000/usuarios/evento/${id_evento}`, {
+        const response = await fetch(`${API_URL}/usuarios/evento/${id_evento}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ function EditarEventos() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8000/usuarios/evento/${id_evento}`, {
+      const response = await fetch(`${API_URL}/usuarios/evento/${id_evento}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
