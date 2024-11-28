@@ -2,6 +2,8 @@ import React, { useState } from 'react'; // Importa useState
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import API_URL from '../../../config/config'; 
+
 
 const FormularioRegistro = () => {
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
@@ -144,7 +146,7 @@ const FormularioRegistro = () => {
 
 const verificarUsuarioExistente = async () => {
     try {
-        const response = await axios.post('http://localhost:8000/usuarios/verificar-usuario/', {
+        const response = await axios.post(`${API_URL}/usuarios/verificar-usuario`, {
             numero_documento: formData.numero_documento,
             correo: formData.correo,
         });
@@ -235,7 +237,7 @@ const subir = async (e) => {
 
     // Si no existe, procede a registrar al usuario
     try {
-        await axios.post('http://localhost:8000/usuarios/', formData);
+        await axios.post(`${API_URL}/usuarios/`, formData);
         await Swal.fire({
             title: "Éxito",
             text: "Usuario registrado exitosamente.",
