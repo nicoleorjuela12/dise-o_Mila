@@ -376,7 +376,6 @@ const Index1 = () => {
                 </div>
             </div>
         </div>
-          <Footer/>
     </div>
   );
 };
