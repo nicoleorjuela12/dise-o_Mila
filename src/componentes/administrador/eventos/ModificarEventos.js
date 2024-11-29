@@ -16,22 +16,16 @@ const RegistroEventosAdmin = () => {
   const [eventosNoEncontrados, setEventosNoEncontrados] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_URL}/usuarios/evento`, {
-      method: 'GET',
+    // Realizando la solicitud GET con axios
+    axios.get(`${API_URL}/usuarios/evento`, {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
+      withCredentials: true, // Similar a 'credentials: include' en fetch
     })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al cargar los eventos');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Eventos cargados:', data);
-        setEventos(data);
+        console.log('Eventos cargados:', response.data);
+        setEventos(response.data);  // Suponiendo que setEventos es el estado donde guardas los eventos
       })
       .catch(error => {
         console.error('Error al cargar eventos:', error);

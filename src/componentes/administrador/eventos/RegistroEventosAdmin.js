@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from 'react-router-dom';
 import { faCalendar, faList, faClock, faMapMarkerAlt, faUsers, faDollarSign} from "@fortawesome/free-solid-svg-icons";
 import BarraAdmin from "../../barras/BarraAdministrador";
 import Swal from "sweetalert2";
@@ -8,6 +9,7 @@ import axios from 'axios';
 
 
 function RegistroEventos() {
+  
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
@@ -28,6 +30,7 @@ function RegistroEventos() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const navigate = useNavigate();
   const isValidURL = (url) => {
     const regex = /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}(\/[\w\d\-._~:/?#[\]@!$&'()*+,;=]*)?(\.(jpg|jpeg|png|gif|bmp|webp))$/i;
     return regex.test(url);
@@ -80,14 +83,17 @@ function RegistroEventos() {
     }
 
     try {
+      // Realiza la solicitud POST para registrar el evento
       const response = await axios.post(`${API_URL}/usuarios/evento`, formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-    
+      
       // Si la solicitud es exitosa
       Swal.fire("Éxito", "Evento registrado exitosamente", "success");
+      
+      // Limpia el formulario después de la creación
       setFormData({
         nombre: "",
         descripcion: "",
@@ -102,6 +108,10 @@ function RegistroEventos() {
         fecha_limite_inscripcion: "",
         estado: "Pendiente",
       });
+  
+      // Opcional: Redirigir a la lista de eventos o a otra página
+      navigate('/eventos');  // Cambia '/eventos' por la ruta donde deseas redirigir
+  
     } catch (error) {
       // Si ocurre un error en la solicitud
       Swal.fire(
@@ -109,6 +119,10 @@ function RegistroEventos() {
         error.response?.data?.message || "Error en la conexión con el servidor",
         "error"
       );
+      
+      // En caso de error, redirigir a la página de eventos
+      navigate('/eventos');  // Cambia '/eventos' por la ruta donde deseas redirigir
+  
     }
     
   };
