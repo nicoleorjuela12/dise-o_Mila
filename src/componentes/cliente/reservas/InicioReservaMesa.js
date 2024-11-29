@@ -147,7 +147,7 @@ const handleSubmit = async (e) => {
     console.log("Datos a enviar:", reservaData); // Agrega esta línea para depuración
 
     try {
-        const response = await axios.post(`${API_URL}/usuarios/reservas`, formData);
+        const response = await axios.post(`${API_URL}/usuarios/reservass`, formData);
         console.log("Respuesta del servidor:", response.data);
   
         Swal.fire('¡Éxito!', 'La reserva ha sido registrada correctamente', 'success');
@@ -172,7 +172,7 @@ const handleSubmit = async (e) => {
           id_usuario: '',
         });
   
-        // Redirige al usuario a la página de consultar reservas cliente
+        
         navigate('/ReservasCliente');
       } catch (error) {
         console.error('Hubo un error al registrar la reserva', error);
