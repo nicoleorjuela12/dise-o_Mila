@@ -18,8 +18,7 @@ const [formData, setFormData] = useState({
     horainicio: '',
     horafin: '',
     decoracion: '',
-    actividades: '',
-    tipo_servicios: false,
+    tipo_servicios: '',
     comentarios: '',
     estado_reserva: 'Pendiente',
     tipo_reserva: 'Reserva Mesa',
@@ -101,9 +100,7 @@ const validateForm = async () => {
     if (!formData.horainicio.trim()) {
     newErrors.horainicio = 'La hora de inicio es obligatoria';
     }
-    if (!formData.actividades.trim()) {
-    newErrors.actividades = 'Elige un tipo de servicio';
-    }
+   
 
     // Verificar disponibilidad
     const esDisponible = await checkAvailability();
@@ -163,7 +160,6 @@ const handleSubmit = async (e) => {
           horainicio: '',
           horafin: '',
           decoracion: '',
-          actividades: '',
           tipo_servicios: false,
           comentarios: '',
           estado_reserva: 'Pendiente',
@@ -372,26 +368,26 @@ return (
                 </div>
 
                 <div className="containerr shadow-lg p-6 bg-white rounded-lg border-2 border-[#4b3621]"> {/* Sombra al formulario */}
-        {/* Tipo de Servicio con Ícono */}
-        <div className="relative">
-            <label className="flex items-center">
-                <i className="fas fa-concierge-bell mr-2 text-[#e2b16d]"></i> {/* Ícono de servicio */}
-                Tipo de Servicio
-            </label>
-            <select 
-                className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
-                id="grid-services"
-                name="actividades"
-                value={formData.actividades}
-                onChange={handleChange}
-            >
-                <option value="">Seleccione</option>
-                <option value="Pintura de Escultura">Pintura de escultura</option>
-                <option value="Parques">Parques</option>
-                <option value="Dibujo con colores">Dibujo con colores</option>
-            </select>
-            {errors.actividades && <p className="error text-red-500">{errors.actividades}</p>}
-        </div>
+                {/* Tipo de Servicio con Ícono */}
+                <div className="relative">
+                    <label className="flex items-center">
+                        <i className="fas fa-concierge-bell mr-2 text-[#e2b16d]"></i> {/* Ícono de servicio */}
+                        Tipo de Servicio
+                    </label>
+                    <select 
+                        className="block w-full bg-white text-gray-700 py-3 px-4 rounded leading-tight shadow-sm transition duration-200 ease-in-out border-2 border-[#3a2a1a] focus:outline-none focus:border-[#e2b16d] focus:ring-2 focus:ring-[#e2b16d]"
+                        id="grid-services"
+                        name="tipo_servicios"
+                        value={formData.tipo_servicios}
+                        onChange={handleChange}
+                    >
+                        <option value="">Seleccione</option>
+                        <option value="Pintura de Escultura">Pintura de escultura</option>
+                        <option value="Parques">Parques</option>
+                        <option value="Dibujo con colores">Dibujo con colores</option>
+                    </select>
+                    {errors.tipo_servicios && <p className="error text-red-500">{errors.tipo_servicios}</p>}
+                </div>
         
         {/* Comentarios con Ícono */}
         <div className="mt-4">
