@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import BarraCliente from '../../barras/BarraCliente';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -19,26 +18,34 @@ const RegistroEventosCliente = () => {
   const navigate = useNavigate(); // Hook para la navegación
 
   useEffect(() => {
-    // Verifica si el usuario está autenticado (puedes modificar esto según tu lógica)
+    // Verificar autenticación
     const id_usuario = localStorage.getItem('id_usuario');
     setIsAuthenticated(!!id_usuario);
-
-    axios.get(`${API_URL}/usuarios/evento`) 
-      .then(respuesta => {
+  
+    const cargarEventos = async () => {
+      try {
+        const respuesta = await axios.get(`${API_URL}/usuarios/evento`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        });
         setEventos(respuesta.data);
-        setEventosNoEncontrados(false); // Reiniciar el estado cuando se cargan eventos
-      })
-      .catch(error => {
+        setEventosNoEncontrados(respuesta.data.length === 0);
+      } catch (error) {
         console.error('Error al cargar eventos:', error);
         Swal.fire({
           title: 'Error',
-          text: 'No se pudo cargar los eventos.',
+          text: 'No se pudo cargar los eventos. Verifica tu conexión o inténtalo más tarde.',
           icon: 'error',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         });
-      });
+      }
+    };
+  
+    cargarEventos();
   }, []);
-
+  
   const eventosFiltrados = eventos
     .filter(evento => {
       const coincideCategoria = categoria ? evento.categoria === categoria : true;
