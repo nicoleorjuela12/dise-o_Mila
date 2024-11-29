@@ -15,9 +15,9 @@ const DetallesPedido = () => {
   const [formData, setFormData] = useState({
     fecha: new Date().toISOString().split('T')[0],
     hora: '',
-    metodo_pago: 'Efectivo',
+    metodo_pago: '',
     total: '',
-    tipo_entrega: 'Domicilio',
+    tipo_entrega: '',
     cantidad: carrito.reduce((total, producto) => total + producto.cantidad, 0),
     comentarios: '',
     estado_pedido: 'Pendiente',
