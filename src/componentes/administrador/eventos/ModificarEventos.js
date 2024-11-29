@@ -15,28 +15,21 @@ const RegistroEventosAdmin = () => {
   const [estadoFiltro, setEstadoFiltro] = useState('');
   const [eventosNoEncontrados, setEventosNoEncontrados] = useState(false);
 
-  useEffect(() => {
-    // Realizando la solicitud GET con axios
-    axios.get(`${API_URL}/usuarios/evento`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true, // Similar a 'credentials: include' en fetch
-    })
-      .then(response => {
-        console.log('Eventos cargados:', response.data);
-        setEventos(response.data);  // Suponiendo que setEventos es el estado donde guardas los eventos
-      })
-      .catch(error => {
-        console.error('Error al cargar eventos:', error);
-        Swal.fire({
-          title: 'Error',
-          text: 'No se pudo cargar los eventos.',
-          icon: 'error',
-          confirmButtonText: 'OK',
-        });
-      });
-  }, []);
+  axios.get(`${API_URL}/usuarios/evento`)
+  .then(response => {
+    console.log('Eventos cargados:', response.data);
+    setEventos(response.data);
+  })
+  .catch(error => {
+    console.error('Detalles del error:', error.response || error.message);
+    Swal.fire({
+      title: 'Error',
+      text: `No se pudo cargar los eventos: ${error.response?.statusText || error.message}`,
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+  });
+
 
   // Filtrar eventos
   const eventosFiltrados = eventos
